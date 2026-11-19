@@ -34,16 +34,14 @@ This writes `site/index.html`. Commit it together with your source changes.
 
 Every push to `main` then redeploys automatically, usually within a minute or two.
 
-## Live news setup (stage 2)
+## Live news (stage 2)
 
-The site keeps one shared news edition in Cloudflare KV.
-When someone opens the app and the edition is more than an hour old, it refreshes from the newswires for everyone.
+The project deploys as a **Cloudflare Worker with static assets**. The configuration is in `wrangler.jsonc`:
+- `site/` is served as the website.
+- `/api/*` runs `worker/index.js`, which uses the handlers in `functions/api/`.
+- The KV namespace `world-pulse-news` is bound as `NEWS` and holds the shared edition.
 
-1. **Workers & Pages → KV → Create namespace**, named `world-pulse-news`.
-2. Open the Pages project, then go to **Settings → Bindings → Add → KV namespace**.
-   - **Variable name:** `NEWS`
-   - **Namespace:** `world-pulse-news`
-3. Redeploy: push a commit, or use **Deployments → Retry deployment** on the latest one.
+Bindings are set in `wrangler.jsonc`, not in the dashboard, because every deploy from Git applies this file.
 
 To check that it's working, open `/api/status`.
 

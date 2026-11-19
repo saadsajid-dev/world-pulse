@@ -1,0 +1,15 @@
+{
+  // Cloudflare Worker config: static site from ./site plus the /api routes in worker/index.js
+  "name": "world-pulse",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-09-01",
+  "assets": {
+    "directory": "./site",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  },
+  "kv_namespaces": [
+    { "binding": "NEWS", "id": "1420e43cf5a244cf9312ffbd8aec4e60" }
+  ],
+  "observability": { "enabled": true }
+}
