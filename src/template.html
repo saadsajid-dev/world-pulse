@@ -305,6 +305,35 @@ a{color:var(--cyan)}
   #sideToggle{font-size:12px;padding:0 12px;height:42px;bottom:54px!important}
 }
 
+
+/* ---------- desktop (Mac/PC): Hotspots panel is a drawer, closed by default ---------- */
+@media (min-width:761px){
+  #side{transform:translateX(calc(-100% - 24px));opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,.9,.2,1),opacity .3s}
+  #side.open{transform:none;opacity:1;pointer-events:auto}
+  #side .side-h{position:relative}
+  #side .side-h .eyebrow{padding-right:40px}
+  #sideClose{display:grid;place-items:center;position:absolute;top:12px;right:12px;width:28px;height:28px;font-size:12px;z-index:2}
+  #sideToggle{display:flex;position:absolute;left:16px;bottom:60px;align-items:center;gap:8px;height:50px;padding:0 16px;font-size:13px;font-weight:600;color:var(--text);cursor:pointer;transition:background .2s,border-color .2s,opacity .3s}
+  #sideToggle:hover{background:rgba(255,255,255,.06)}
+  #hud:has(#side.open) #sideToggle{border-color:rgba(79,216,255,.45);background:rgba(79,216,255,.1)}
+  #tools{left:50%;max-width:calc(100% - 32px);transition:left .45s cubic-bezier(.2,.9,.2,1),max-width .45s}
+  #hud:has(#side.open) #tools{left:calc(50% + 158px);max-width:calc(100% - 348px)}
+  #hud.loading #sideToggle{opacity:0}
+}
+#modeSeg button{white-space:nowrap}
+@media (min-width:761px) and (max-width:1360px){ #topbar .meta{display:none} }
+@media (min-width:761px){ #tools.ovf{-webkit-mask-image:linear-gradient(90deg,#000 88%,rgba(0,0,0,.15));mask-image:linear-gradient(90deg,#000 88%,rgba(0,0,0,.15))} #tools.ovf.end{-webkit-mask-image:none;mask-image:none} }
+/* medium windows: keep the top bar on one line */
+@media (min-width:761px) and (max-width:1180px){
+  #topbar .meta{display:none}
+  .act-btn .bl{display:none}
+  .act-btn{padding:0 11px}
+  #bcastBtn{width:40px;justify-content:center;padding:0}
+  #modeSeg .lg{display:none!important}#modeSeg .sm{display:inline!important}
+  .search{flex:1 1 140px;min-width:0}
+  .search input,.search input:focus{width:100%}
+}
+
 /* ---------- VISUALISATION ---------- */
 .seg .sm{display:none}
 #stage.bg{filter:blur(6px) brightness(.32) saturate(.7);transform:scale(1.02)}
@@ -401,6 +430,7 @@ a{color:var(--cyan)}
 #card{width:min(620px,100%);max-height:min(86vh,820px);display:flex;flex-direction:column;overflow:hidden;transform:translateY(24px) scale(.97);transition:transform .5s cubic-bezier(.2,.9,.2,1);background:rgba(11,17,31,.82);position:relative}
 #card{position:absolute;right:16px;top:16px;bottom:16px;width:min(440px,max(340px,34vw))!important;max-height:none!important;transform:translateX(40px)!important;opacity:0;transition:transform .55s cubic-bezier(.2,.9,.2,1),opacity .35s,height .45s cubic-bezier(.2,.9,.2,1)!important}
 #overlay.on #card{transform:none!important;opacity:1}
+#overlay:not(.on) #card{pointer-events:none!important}   /* a closed card no longer swallows clicks on the topic bar */
 .grab{display:none}
 .accent{position:absolute;top:0;left:0;right:0;height:3px}
 .c-head{padding:22px 24px 14px;display:flex;gap:14px;align-items:flex-start}
@@ -511,8 +541,8 @@ a{color:var(--cyan)}
   const WARP_UNUSED=(()=>{ let s=20261117; const r=()=>{ s=(s*1664525+1013904223)>>>0; return s/4294967296; }; return Array.from({length:220},()=>({a:r()*6.283,d:r()*.9+.05,s:r()*.8+.4})); })();
   const WARP_V=.55;   // streak speed, in screen-diagonals per second (the intro's speed)
   const L=window.__ld={p:.12,shown:0,t0:performance.now(),gone:false};
-  const ctr=()=>{ const side=W>760?316:0; return [side+(W-side)/2, H/2+(W<760?-10:0)]; };
-  const baseR=()=>W<760?Math.min(W*.38,H*.168):Math.min((W-316)*.36,H*.3), kMin=()=>Math.max(.12,.45*Math.min(W,H)/(4.2*baseR()));
+  const ctr=()=>[W/2, H/2+(W<760?-10:0)];   // the app opens with the Hotspots panel closed, so the globe is centred
+  const baseR=()=>W<760?Math.min(W*.38,H*.168):Math.min(W*.36,H*.3), kMin=()=>Math.max(.12,.45*Math.min(W,H)/(4.2*baseR()));
   /* mini-Earth: built-in land map (works on a first visit) or, if saved, the last visit's news colours */
   const TW=256, TH=128, tex=new Uint8ClampedArray(TW*TH*3);
   (function(){ const b=atob('/*__LAND__*/'); for(let k=0;k<TW*TH;k++){ const land=(b.charCodeAt(k>>3)>>(k&7))&1, o=k*3; tex[o]=land?62:14; tex[o+1]=land?84:34; tex[o+2]=land?120:66; } })();
@@ -755,7 +785,8 @@ const SPHERE={type:'Sphere'};
 /* ================= CANVAS ================= */
 const cv=document.getElementById('map'), ctx=cv.getContext('2d');
 let W=innerWidth, H=innerHeight, DPR=Math.min(devicePixelRatio||1,2);
-const SIDE=()=> W>760 ? 316 : 0;
+const SIDE=()=> W>760 && document.getElementById('side')?.classList.contains('open') ? 316 : 0;   // desktop: room taken by the Hotspots panel when it's open
+let sideX=0;   // eased SIDE() so the globe glides when the panel opens/closes
 let sL=0, toolsB=164;   // 0 = globe centred, 1 = lifted above the Hotspots/Overview sheet (phones)
 function sheetWanted(){ return W<760 && viewMode==='map' && mode==='globe' && document.getElementById('side').classList.contains('open'); }
 function geoSheet(){ const top=toolsB+8, bot=H-H*.46-8, ah=Math.max(100,bot-top); return {c:[W/2,top+ah/2], r:Math.min(W*.42,ah*.41)}; }
@@ -816,7 +847,7 @@ let selected=null, hoverName=null, modalOpen=false;
 /* ================= INTERACTION (d3.zoom drives gestures; we ease) ================= */
 let lastT=d3.zoomIdentity;
 const zoom=d3.zoom().scaleExtent([0.6,12]).clickDistance(6)
-  .filter(e=>!e.button && e.type!=='dblclick')
+  .filter(e=>!e.button && e.type!=='dblclick' && !(e.type==='wheel' && mode==='globe'))
   .on('start',e=>{
     lastT=e.transform;
     const se=e.sourceEvent;
@@ -826,7 +857,7 @@ const zoom=d3.zoom().scaleExtent([0.6,12]).clickDistance(6)
     const t=e.transform, se=e.sourceEvent;
     if(mode==='globe'){
       if(se && t.k===lastT.k && (se.type==='mousemove'||se.type==='touchmove'||se.type==='pointermove')){
-        const s=0.25/k, dx=(t.x-lastT.x)*s, dy=(t.y-lastT.y)*s;
+        const s=W<760?0.25/k:52/(baseR()*k), dx=(t.x-lastT.x)*s, dy=(t.y-lastT.y)*s;   // desktop: the spot you grab follows the pointer
         rot[0]+=dx; rot[1]=Math.max(-85,Math.min(85,rot[1]-dy));
         vel=[vel[0]*.5+dx*.5, vel[1]*.5-dy*.5]; lastMoveT=performance.now();
       }
@@ -839,6 +870,25 @@ const zoom=d3.zoom().scaleExtent([0.6,12]).clickDistance(6)
   .on('end',()=>{ if(dragging){ const n=performance.now(); if(n-lastMoveT>90) vel=[0,0]; releaseT=n; } dragging=false; });   // held still, then lifted: no fling
 const sel=d3.select(cv).call(zoom).on('dblclick.zoom',null);
 function syncZoom(t){ cv.__zoom=t; lastT=t; }
+document.getElementById('tools').addEventListener('wheel',e=>{ const el=e.currentTarget; if(el.scrollWidth<=el.clientWidth+2) return; if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ el.scrollLeft+=e.deltaY; e.preventDefault(); } },{passive:false});
+/* Mac trackpad & mouse on the globe: two-finger swipe rotates it, pinch zooms, a mouse wheel zooms */
+let wheelT=0;
+cv.addEventListener('wheel',e=>{
+  if(mode!=='globe') return;
+  e.preventDefault();
+  const [lo,hi]=zoom.scaleExtent(), now=performance.now();
+  const pinch=e.ctrlKey, px=e.deltaMode===1?16:e.deltaMode===2?H:1, dx=e.deltaX*px, dy=e.deltaY*px;
+  const trackpad=!pinch && e.deltaMode===0 && (Math.abs(dx)>0 || !Number.isInteger(dy) || Math.abs(dy)<40);
+  flying=null;
+  if(trackpad){
+    const s=52/(baseR()*k);
+    rot[0]-=dx*s; rot[1]=Math.max(-85,Math.min(85,rot[1]+dy*s));
+    vel=[0,0]; wheelT=now; releaseT=now;   // spin pauses while you swipe, then eases back in
+  } else {
+    const f=Math.exp(-dy*(pinch?0.012:0.0022));
+    targetK=Math.max(lo,Math.min(hi,targetK*f)); syncZoom(d3.zoomIdentity.translate(lastT.x,lastT.y).scale(targetK));
+  }
+},{passive:false});
 
 document.getElementById('zin').onclick=()=>sel.call(zoom.scaleBy,1.6);
 document.getElementById('zout').onclick=()=>sel.call(zoom.scaleBy,1/1.6);
@@ -951,6 +1001,7 @@ function frame(now){
   requestAnimationFrame(frame);
   if(viewMode!=='map' && !flying) return;   // freeze only under the data views — the map stays live beside a country card
   { const sw=sheetWanted()?1:0; sL+=(sw-sL)*.1; if(Math.abs(sL-sw)<.001) sL=sw; }
+  { const st=SIDE(); sideX+=(st-sideX)*.12; if(Math.abs(st-sideX)<.5) sideX=st; }
   fL+=((focusActive()?1:0)-fL)*.1; if(Math.abs(fL-(focusActive()?1:0))<.001) fL=focusActive()?1:0;
   doHover();
 
@@ -964,7 +1015,7 @@ function frame(now){
     } else {
       k+=(targetK-k)*0.16;                                  // eased zoom
       if(!dragging){ rot[0]+=vel[0]; rot[1]=Math.max(-85,Math.min(85,rot[1]+vel[1])); vel[0]*=.957; vel[1]*=.94; }   // weighty glide, then auto-spin takes over
-      if(!dragging && !selected && !touring){ const rr=Math.min(1,(now-releaseT)/1200), dsp=AUTO*spinBoost/Math.sqrt(k)*rr*rr*(3-2*rr);   // spin eases back in after release
+      if(!dragging && performance.now()-wheelT>120 && !selected && !touring){ const rr=Math.min(1,(now-releaseT)/1200), dsp=AUTO*spinBoost/Math.sqrt(k)*rr*rr*(3-2*rr);   // spin eases back in after release
         rot[0]+=dsp; spinAcc+=dsp; }
       if(introHold) rot[0]+=0.025;                         // loading: the camera drifts slowly in orbit, so the sky, Sun and Moon glide              // auto-spin never stops (except when a country is open)
     }
@@ -1586,7 +1637,7 @@ function buildUI(){
   document.getElementById('list').innerHTML=(w.length?`<div class="lst-h">★ Your watchlist</div>`+w.map(n=>item(n,NEWS.countries[n])).join('')+`<div class="lst-h">${topic==='all'?'All hotspots':esc(TOPICS.find(x=>x[0]===topic)[1])}</div>`:(topic!=='all'?`<div class="lst-h">${esc(TOPICS.find(x=>x[0]===topic)[1])} · ${shown.length}</div>`:''))
     + shown.map(([n,v])=>item(n,v)).join('') + (shown.length?'':`<div class="lst-empty">${solo==='none'?'Countries with no news are lit on the map.':solo?'No '+LV[solo].label.toLowerCase()+' stories'+(topic!=='all'?' on this topic':'')+' in this edition.':'No stories on this topic in this edition.'}</div>`);
   renderTopics?.();
-  document.querySelectorAll('#list .item').forEach(b=>b.onclick=()=>{ sideReturn=innerWidth<760; openCountry(b.dataset.n); document.getElementById('side').classList.remove('open'); });
+  document.querySelectorAll('#list .item').forEach(b=>b.onclick=()=>{ sideReturn=true; openCountry(b.dataset.n); document.getElementById('side').classList.remove('open'); });
   const tk=document.getElementById('tk'); tk.innerHTML=tickerHTML();
   tk.querySelectorAll('.tk-item[data-n]').forEach(s=>{ s.style.cursor='pointer'; s.onclick=()=>openCountry(s.dataset.n); });
 }
@@ -1605,7 +1656,8 @@ function tickerHTML(){
 }
 setInterval(()=>{ const tk=document.getElementById('tk'); if(!tk) return; tk.innerHTML=tickerHTML(); tk.querySelectorAll('.tk-item[data-n]').forEach(s=>{ s.style.cursor='pointer'; s.onclick=()=>openCountry(s.dataset.n); }); },5*60e3);   // keep ages and the 24 h window current
 function countUp(id,to){ const el=document.getElementById(id); d3.select(el).transition().duration(1200).tween('t',()=>{const i=d3.interpolateRound(0,to);return t=>el.textContent=i(t);}); }
-document.getElementById('sideToggle').onclick=()=>document.getElementById('side').classList.toggle('open');
+document.getElementById('sideToggle').onclick=()=>{ document.getElementById('side').classList.toggle('open'); if(W>760) sideChanged(); };
+function sideChanged(){ if(typeof flatProj!=="undefined" && features?.length) flatFit(); layoutHUD(); }
 
 document.querySelectorAll('#legend .chip').forEach(c=>c.onclick=()=>{
   const l=c.dataset.l; hidden.has(l)?hidden.delete(l):hidden.add(l); c.classList.toggle('off',hidden.has(l)); haptic();
@@ -1640,7 +1692,7 @@ const overlay=document.getElementById('overlay');
 let openTimer=null;
 function openCountry(name){
   if(!byName.has(name)) return;
-  { const sd=document.getElementById('side'); if(innerWidth<760 && sd.classList.contains('open')){ sideReturn=true; sd.classList.remove('open'); } }
+  { const sd=document.getElementById('side'); if(sd.classList.contains('open')){ sideReturn=true; sd.classList.remove('open'); } }
   hideTip(); hoverName=null;
   if(touring && !tourPaused){ tourPaused=true; setPlayIcon(); clearTimeout(tourTimer); stopVoice(); }
   sfx('ping'); haptic();
@@ -1657,7 +1709,7 @@ function closeCard(){
   document.getElementById('stage').classList.remove('dim');
   document.getElementById('hud').classList.remove('hide');
   selected=null; modalOpen=false; aiAbort?.abort(); cardKind='country'; curRegion=null; document.getElementById('card').classList.remove('expanded');
-  if(sideReturn && innerWidth<760){ sideReturn=false; document.getElementById('side').classList.add('open'); }   // back to Hotspots/Overview where the story was opened from
+  if(sideReturn){ sideReturn=false; document.getElementById('side').classList.add('open'); }   // back to Hotspots/Overview where the story was opened from
 }
 document.getElementById('close').onclick=closeCard;
 overlay.addEventListener('click',e=>{ if(e.target===overlay) closeCard(); });
@@ -2292,7 +2344,7 @@ function regionBrief(r,rows){
   return `${c.red} critical, ${c.orange} emerging and ${c.green} minor stories. ${top}.`;
 }
 function openRegion(r){
-  { const sd=document.getElementById('side'); if(innerWidth<760 && sd.classList.contains('open')){ sideReturn=true; sd.classList.remove('open'); } }
+  { const sd=document.getElementById('side'); if(sd.classList.contains('open')){ sideReturn=true; sd.classList.remove('open'); } }
   hideTip(); hoverName=null; haptic(); sfx('ping');
   cardKind='region'; curRegion=r; selected=null;
   if(mode==='globe') fly([-REG_CTR[r][0],-REG_CTR[r][1]*.7],.95,1100);
@@ -2416,7 +2468,9 @@ function layoutHUD(){
   else { $('side').style.maxHeight=''; $('side').style.bottom=''; }   // phones: sheet docks to the bottom edge
   const vb=Math.round(hb-lg.top+gap)+($('tline').classList.contains('on')?$('tline').offsetHeight+gap:0);
   for(const id of ['tline','fetchPill','toast']){ const el=$(id); el.style.bottom=(base+(id==='tline'?0:fixOff))+'px'; if(el.classList.contains('on')) base+=el.offsetHeight+gap; }
-  const edge=mob?10:16, left=mob?edge:16+300+16;
+  { const tl=$('tools'); tl.classList.toggle('ovf',tl.scrollWidth>tl.clientWidth+2); tl.classList.toggle('end',tl.scrollLeft+tl.clientWidth>=tl.scrollWidth-4); }
+  if(!mob){ const tg=$('sideToggle').getBoundingClientRect(); $('legend').style.left=(tg.width?Math.round(tg.right+10):16)+'px'; } else $('legend').style.left='';
+  const edge=mob?10:16, left=mob||!$('side').classList.contains('open')?edge:16+300+16;
   for(const id of ['rankView','webView']){ const s=$(id).style; s.left=left+'px'; s.right=edge+'px'; s.top=below+'px'; s.bottom=vb+'px'; }
 }
 function wireFeatures(){
@@ -2537,7 +2591,7 @@ function renderOverview(){
       <div class="rstrip">${regs.map(x=>`<button class="rtile" data-r="${x.r}" style="--rc:${LV[x.worst].c}"><span class="rt-n">${x.r}</span><span class="rt-c">${['red','orange','green'].map(l=>x.c[l]?`<i style="background:${LV[l].c}">${x.c[l]}</i>`:'').join('')||'<small>quiet</small>'}</span><span class="rt-h">${x.rows[0]?esc(shortName(x.rows[0][0]))+' — '+esc(x.rows[0][1].headline):'No major headlines'}</span></button>`).join('')}</div></div>`;
   el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{ const k=b.dataset.t; setTopic(topic===k?'all':k); renderOverview(); });
   el.querySelectorAll('[data-solo]').forEach(b=>{ b.classList.toggle('on',solo===b.dataset.solo); b.onclick=()=>soloLevel(b.dataset.solo); });
-  el.querySelectorAll('.rtile').forEach(b=>b.onclick=()=>{ sideReturn=innerWidth<760; document.getElementById('side').classList.remove('open'); openRegion(b.dataset.r); });
+  el.querySelectorAll('.rtile').forEach(b=>b.onclick=()=>{ sideReturn=true; document.getElementById('side').classList.remove('open'); openRegion(b.dataset.r); });
 }
 
 /* ================= VIEWS: map · ranking · network ================= */
@@ -2638,9 +2692,9 @@ function soloLevel(l){
 let sideReturn=false;
 function wireSheetDrag(){
   const side=document.getElementById('side'), hud=document.getElementById('hud');
-  const sync=()=>{ const on=innerWidth<760 && side.classList.contains('open'); hud.classList.toggle('sheeton',on); const tb=document.getElementById('tools')?.getBoundingClientRect(); if(tb && tb.bottom>0) toolsB=tb.bottom; };
+  const sync=()=>{ if(innerWidth>760) sideChanged(); const on=innerWidth<760 && side.classList.contains('open'); hud.classList.toggle('sheeton',on); const tb=document.getElementById('tools')?.getBoundingClientRect(); if(tb && tb.bottom>0) toolsB=tb.bottom; };
   new MutationObserver(sync).observe(side,{attributes:true,attributeFilter:['class']}); addEventListener('resize',sync); sync();
-  document.getElementById('sideClose').onclick=()=>{ side.classList.remove('open'); sideReturn=false; haptic(); };
+  document.getElementById('sideClose').onclick=()=>{ side.classList.remove('open'); sideReturn=false; haptic(); if(innerWidth>760) sideChanged(); };
 }
 function fitViewport(){
   const vv=window.visualViewport, h=Math.round(vv?Math.min(vv.height,innerHeight):innerHeight), top=Math.round(vv?vv.offsetTop:0);
@@ -2783,7 +2837,7 @@ function drawTrace(now,PC,px){
 let bounce=0, bounceV=0;
 function kickBounce(dir){ bounceV+=dir*.022; }
 function stepBounce(){ bounceV+=-bounce*.22; bounceV*=.72; bounce+=bounceV; if(Math.abs(bounce)<1e-4&&Math.abs(bounceV)<1e-4){ bounce=0; bounceV=0; } return 1+bounce; }
-cv.addEventListener('wheel',e=>{ const [lo,hi]=zoom.scaleExtent(); const cur=mode==='globe'?targetK:ftTarget.k; if(e.deltaY<0 && cur>=hi-1e-3) kickBounce(1); if(e.deltaY>0 && cur<=lo+1e-3) kickBounce(-1); },{passive:true});
+cv.addEventListener('wheel',e=>{ if(mode==='globe' && !e.ctrlKey && (e.deltaX!==0 || !Number.isInteger(e.deltaY) || Math.abs(e.deltaY)<40)) return; const [lo,hi]=zoom.scaleExtent(); const cur=mode==='globe'?targetK:ftTarget.k; if(e.deltaY<0 && cur>=hi-1e-3) kickBounce(1); if(e.deltaY>0 && cur<=lo+1e-3) kickBounce(-1); },{passive:true});
 
 /* --- 12. pointer parallax (motion sensors are blocked inside Claude's frame, so the mouse / finger drives it) --- */
 let par={x:0,y:0,tx:0,ty:0};
@@ -2812,7 +2866,7 @@ function animateCard(){
 let fA=0, focusList=[], focusSet=new Set(), focusT0=0, focusKey='';
 const cardW=()=>Math.min(440,Math.max(340,W*.34));
 const sheetFrac=()=>.56;
-function geoNormal(){ return {c:[SIDE()+(W-SIDE())/2, H/2+(W<760?-10:0)], r: W<760?Math.min(W*0.38,H*0.168):Math.min((W-SIDE())*0.36,H*0.3)}; }   // phone: globe ≈ ⅓ of screen height · desktop ≈ 60%
+function geoNormal(){ return {c:[sideX+(W-sideX)/2, H/2+(W<760?-10:0)], r: W<760?Math.min(W*0.38,H*0.168):Math.min((W-sideX)*0.36,H*0.3)}; }   // phone: globe ≈ ⅓ of screen height · desktop ≈ 60%
 function geoFocus(){
   if(W<760){ const sh=H*sheetFrac(), ah=Math.max(120,H-sh-20); return {c:[W/2,10+ah/2], r:Math.min(W*.44,ah*.42)}; }
   const x1=W-cardW()-32; return {c:[(16+x1)/2,H/2], r:Math.min(x1-16,H)*.4};
