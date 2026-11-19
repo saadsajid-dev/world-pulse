@@ -3016,7 +3016,7 @@ async function liveRefresh(manual){
     } else if(j.status==='recent'){
       applyPayload(j.payload);
       if(manual) showToast(`<b>Already up to date</b><span>Edition updated ${minsAgo(j.payload.updated)}. You can refresh again in a few minutes.</span>`);
-    } else applyPayload(j.payload);
+    } else { applyPayload(j.payload); if(j.payload?.pending && (liveRefresh._n=(liveRefresh._n||0)+1)<4) setTimeout(()=>liveRefresh(false),95000); }   // more stories still to label: carry on shortly
   }catch(e){
     if(manual) showToast(`<b>Couldn't update right now</b><span>The map keeps the current edition. Try again in a minute.</span>`,5000);
   }

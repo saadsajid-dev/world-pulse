@@ -10,3 +10,6 @@ export async function onRequestPost({ env, request }) {
     return json({ ok: false, error: String(e.message || e) }, 500);
   }
 }
+
+// GET works too (same rate limits), so a refresh can be started from a browser address bar
+export const onRequestGet = onRequestPost;

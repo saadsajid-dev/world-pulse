@@ -13,4 +13,3 @@ j = await call(refresh, 'https://x/api/refresh'); console.log('forced      ', j.
 j = await call(refresh, 'https://x/api/refresh?manual=1'); console.log('again       ', j.status, j.ageMin);
 j = await call(news, 'https://x/api/news'); console.log('news        ', { stale: j.stale, ageMin: j.ageMin, events: j.payload.events.length });
 console.log('status      ', JSON.stringify(await call(status, 'https://x/api/status')).slice(0, 220));
-mem.clear(); j = await call(news, 'https://x/api/news'); await Promise.all(pend); console.log('bg refresh  ', j.refreshing, Object.keys((await call(news, 'https://x/api/news')).payload.countries));
