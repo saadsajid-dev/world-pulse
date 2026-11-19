@@ -45,10 +45,18 @@ Bindings are set in `wrangler.jsonc`, not in the dashboard, because every deploy
 
 To check that it's working, open `/api/status`.
 
+### AI (stage 3)
+
+The `AI` binding uses Cloudflare Workers AI on its free daily allowance. The code is in `lib/ai.js`.
+
+- **Labels:** Llama 3.3 70B labels each new story with its country, the other country involved, a severity from 1 to 5 and its topics. Each refresh labels at most 90 new stories; the rest are labelled on the next refresh.
+- **Briefings:** it writes the two-sentence country summaries and reuses each one until that country's headlines change.
+- **Fallback:** if the AI is slow, unavailable or over its allowance, the keyword rules in `lib/pipeline.js` take over automatically.
+
 ## Roadmap
 
 1. **Static site (done):** the globe runs on its own, using a bundled news snapshot.
-2. **News pipeline (current stage):** refreshes when the app is opened, shared by all visitors. It pulls from GDELT and news feeds, then saves an edition.
-3. **Free AI scoring:** Cloudflare Workers AI rates urgency, assigns topics and writes headlines.
+2. **News pipeline (done):** refreshes when the app is opened, shared by all visitors. It pulls from GDELT and news feeds, then saves an edition.
+3. **Free AI scoring (done):** Cloudflare Workers AI rates urgency, assigns topics and writes headlines.
 4. **AI briefings and the "Get latest" button**, with caching and rate limits.
 5. **Polish:** voices, error handling and an optional custom domain.
