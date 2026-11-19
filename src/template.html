@@ -1933,7 +1933,7 @@ function setFetch(state,step){
   pill.classList.toggle('on',state!=='idle');
   liveBtn.classList.toggle('busy',state!=='idle');
   document.getElementById('fpStep').textContent=fetchStep||'';
-  document.getElementById('fpTitle').textContent= state==='waking' ? 'Waking Claude…' : (W<760?'Gathering latest news':'Claude is gathering the latest news');
+  document.getElementById('fpTitle').textContent= state==='waking' ? 'Waking Claude…' : (W<760||!window.claude?.use?'Gathering latest news':'Claude is gathering the latest news');
 }
 setInterval(()=>{ if(fetchState==='idle') return; const s=Math.floor((Date.now()-fetchT0)/1000); document.getElementById('fpTime').textContent=`${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
   if(s>20*60) setFetch('idle',''); },1000);
@@ -1942,7 +1942,8 @@ function minsAgo(iso){ const m=Math.round((Date.now()-Date.parse(iso))/60000); r
 liveBtn.onclick=async()=>{
   if(fetchState!=='idle'){ showToast(`<b>Update in progress</b><span>${esc(fetchStep||'Starting…')}</span>`); return; }
   const upd=NEWS.updated;
-  if(upd && Date.now()-Date.parse(upd)<8*60000){ showToast(`<b>Already up to date</b><span>Edition updated ${minsAgo(upd)}. Next automatic update within the hour.</span>`); return; }
+  if(upd && Date.now()-Date.parse(upd)<8*60000){ showToast(`<b>Already up to date</b><span>Edition updated ${minsAgo(upd)}. ${API?'It refreshes itself once it’s an hour old.':'Next automatic update within the hour.'}</span>`); return; }
+  if(API){ liveRefresh(true); return; }
   if(!mcpNS){ showToast(window.claude?.use?`<b>Live refresh isn't available here</b><span>The map updates itself every hour, 8 am – midnight. For an instant update, ask Claude in your World News chat to “refresh the map”.</span>`:`<b>Snapshot edition</b><span>Live updates are being set up. This edition is a saved snapshot for now.</span>`,7000); return; }
   setFetch('waking','Starting a fresh scan of the world’s newswires'); sfx('click');
   try{
@@ -2934,7 +2935,44 @@ setTimeout(saveLoaderTexture,1500);
 setTimeout(introReady,4800);    // never wait long for live news — the built-in edition is already on screen
 requestAnimationFrame(frame);
 
-/* ================= LIVE FEED (db) & CLAUDE ================= */
+/* ================= LIVE FEED ================= */
+function applyPayload(payload){
+  if(!payload || !payload.countries || (NEWS.updated && payload.updated < NEWS.updated)) { introReady(); return false; }
+  const prev=NEWS; NEWS=normEvents(normLinks(payload));
+  if(!sinceDone){ sinceDone=true; checkSince(payload); }
+  else if(prev.updated!==payload.updated){ checkSince(payload,prev); }
+  document.getElementById('feed').textContent='LIVE · '+String(payload.updated).slice(0,16).replace('T',' ')+' UTC';
+  histMerge(); refreshMap(); buildUI(); vizRefresh(); if(selected && cardKind==='country') fillCard(selected);
+  introReady(); if(introStarted){ clearTimeout(ldSaveT); ldSaveT=setTimeout(saveLoaderTexture,6000); }
+  return true;
+}
+/* standalone site: the shared edition lives at /api/news; anyone opening a stale edition refreshes it for everyone */
+const API = !window.claude?.use && location.protocol.startsWith('http');
+async function apiNews(){ const r=await fetch('/api/news',{cache:'no-store'}); const j=await r.json(); if(!j.ok) throw new Error(j.error||'unavailable'); return j; }
+async function liveRefresh(manual){
+  if(fetchState!=='idle') return;
+  setFetch('fetching','Scanning the world’s newswires');
+  try{
+    const r=await fetch('/api/refresh'+(manual?'?manual=1':''),{method:'POST'}); const j=await r.json();
+    if(!j.ok) throw new Error(j.error||'failed');
+    if(j.status==='busy'){   // someone else is refreshing: wait for their edition
+      setFetch('fetching','Another reader is already updating — waiting for the new edition');
+      const before=NEWS.updated;
+      for(let i=0;i<12;i++){ await new Promise(r=>setTimeout(r,10000)); const n=await apiNews().catch(()=>null); if(n?.payload && n.payload.updated!==before){ applyPayload(n.payload); break; } if(n && !n.refreshing) break; }
+    } else if(j.status==='recent'){
+      applyPayload(j.payload);
+      if(manual) showToast(`<b>Already up to date</b><span>Edition updated ${minsAgo(j.payload.updated)}. You can refresh again in a few minutes.</span>`);
+    } else applyPayload(j.payload);
+  }catch(e){
+    if(manual) showToast(`<b>Couldn't update right now</b><span>The map keeps the current edition. Try again in a minute.</span>`,5000);
+  }
+  setFetch('idle','');
+}
+if(API){
+  apiNews().then(j=>{ if(j.payload) applyPayload(j.payload); else introReady(); if(j.stale && !j.refreshing) liveRefresh(false); }).catch(()=>introReady());
+}
+
+/* ================= CLAUDE (inside claude.ai) ================= */
 (async()=>{
   try{
     if(!window.claude?.use){ introReady(); return; }
@@ -2946,13 +2984,7 @@ requestAnimationFrame(frame);
       if(!s.exists) return;
       let payload=null;
       try{ const v=s.data(); payload = v.json ? JSON.parse(v.json) : (v.countries ? v : null); }catch{}
-      if(!payload || !payload.countries || (NEWS.updated && payload.updated < NEWS.updated)) return;
-      const prev=NEWS; NEWS=normEvents(normLinks(payload));
-      if(!sinceDone){ sinceDone=true; checkSince(payload); }
-      else if(prev.updated!==payload.updated){ checkSince(payload,prev); }
-      document.getElementById('feed').textContent='LIVE · '+String(payload.updated).slice(0,16).replace('T',' ')+' UTC';
-      histMerge(); refreshMap(); buildUI(); vizRefresh(); if(selected && cardKind==='country') fillCard(selected);
-      introReady(); if(introStarted){ clearTimeout(ldSaveT); ldSaveT=setTimeout(saveLoaderTexture,6000); }
+      applyPayload(payload);
     },()=>introReady());
     db.doc('news/history').onSnapshot(s=>{ if(!s.exists) return; try{ const v=s.data(); dbHist=JSON.parse(v.json||'[]'); histMerge(); vizRefresh(); }catch{} },()=>{});
     db.doc('news/status').onSnapshot(s=>{ onStatus(s.exists?s.data():null); },()=>{});
