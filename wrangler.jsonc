@@ -13,5 +13,6 @@
   "kv_namespaces": [
     { "binding": "NEWS", "id": "1420e43cf5a244cf9312ffbd8aec4e60" }
   ],
+  "ai": { "binding": "AI" },   // free Workers AI allowance: labels headlines and writes briefings
   "observability": { "enabled": true }
 }
