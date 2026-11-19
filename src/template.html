@@ -451,6 +451,12 @@ a{color:var(--cyan)}
 .c-hl .wd{display:inline-block;opacity:0;transform:translateY(6px);filter:blur(3px);animation:wdIn .55s cubic-bezier(.2,.9,.2,1) forwards}
 @keyframes wdIn{to{opacity:1;transform:none;filter:none}}
 .c-hl{font-family:'Space Grotesk';font-size:21px;line-height:1.3;font-weight:600;margin-bottom:10px}
+.c-hl{margin-bottom:12px}
+.c-sum{margin:0 0 20px}
+.c-wait{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:8px}.c-wait span{width:14px;height:14px;border-radius:50%;border:2px solid rgba(79,216,255,.25);border-top-color:var(--cyan);animation:spin 1s linear infinite;flex:none}
+.c-wide p{font-size:13.5px;line-height:1.6;color:#b9c3d8;margin:0}
+#cBody .sec{margin-top:22px}
+#cBody .tl.evl li{margin-bottom:12px}
 .c-topic{font-size:11px;letter-spacing:.04em;color:var(--muted);margin:2px 0 6px}.c-topic b{color:var(--cyan);font-weight:600}
 .c-also{font-size:12.5px;line-height:1.5;color:var(--muted);margin:-4px 0 12px}.c-also b{color:#c3cce0;font-weight:600}
 .c-sum{font-size:14.5px;line-height:1.65;color:#c9d2e6}
@@ -1741,6 +1747,18 @@ function step(d){
 
 function linksFor(n){ return (NEWS.links||[]).filter(l=>l.path?.includes(n)).map(l=>{ const o=l.path.find(x=>x!==n); return [o, l.path.length>2?`${routeTxt(l)} · ${l.label}`:l.label]; }); }
 function host(u){ try{ return new URL(u).hostname.replace(/^www\./,''); }catch{ return ''; } }
+/* briefing: the pipeline's AI summary for the overall view; a filter's brief is written on tap (cached for everyone) */
+const BRIEFS=new Map();
+function briefHTML(n,i){
+  const t=i._topic||'all', k=n+'|'+t+'|'+NEWS.updated;
+  if(t==='all' && i.aiSum && i.summary) return `<p class="c-sum">${esc(i.summary)}</p>`;
+  if(BRIEFS.has(k)){ const b=BRIEFS.get(k); return b?`<p class="c-sum">${esc(b)}</p>`:''; }
+  if(!API) return t==='all' && i.summary ? `<p class="c-sum">${esc(i.summary)}</p>` : '';
+  BRIEFS.set(k,null);
+  fetch(`/api/brief?c=${encodeURIComponent(n)}&t=${t}`).then(r=>r.json()).then(j=>{ BRIEFS.set(k,j.ok&&j.text?j.text:''); if(selected===n && cardKind==='country') fillCard(n); }).catch(()=>BRIEFS.set(k,''));
+  return `<p class="c-sum c-wait"><span></span>Writing a brief…</p>`;
+}
+function moreFor(n,i){ return evFor(n).filter(e=>overlap(e.headline,i.headline)<.5); }   // the headline story isn't repeated below it
 function evFor(n){ const out=[]; for(const e of (NEWS._ev?.[n]||[])){ if(!evInTopic(e,topic)) continue; if(out.some(o=>overlap(o.headline,e.headline)>=.5)) continue; out.push(e); } return out; }   // one line per story, even when several outlets covered it
 function fillCard(n){
   const i=info(n), l=levelOf(n), c=LV[l].c;
@@ -1763,11 +1781,11 @@ function fillCard(n){
       ${i._topic?`<div class="c-topic">Showing <b>${esc(TOPICS.find(x=>x[0]===i._topic)?.[1]||i._topic)}</b> news${i._overall.level!==i.level?` · overall <span style="color:${LV[i._overall.level].c}">${LV[i._overall.level].label}</span>`:''}</div>`:''}
       ${i.ongoing?`<div class="c-topic">Ongoing crisis — serious events on several recent days</div>`:''}
       <div class="c-hl">${esc(i.headline)}</div>
-      ${i.summary?`<p class="c-sum">${esc(i.summary)}</p>`:''}
-      ${i._topic && i._overall.summary && overlap(i._overall.summary,i.headline)<.5 && overlap(i._overall.summary,i.summary||'')<.5?`<p class="c-also"><b>Also in the news:</b> ${esc(i._overall.summary)}</p>`:''}
+      ${briefHTML(n,i)}
       ${ch?`<div class="c-chg ${ch.dir>0?'up':'dn'}">${ch.dir>0?'↑ Escalated':'↓ Eased'} from <b>${LV[ch.from].label}</b> to <b>${LV[ch.to].label}</b> since ${chgSrc==='visit'?'your last visit':'the previous edition'}</div>`:''}
       <div class="readmore">${srcs[0]?`<a class="rm-main" href="${esc(srcs[0].url)}" target="_blank" rel="noopener">Read the full story <small>${esc(host(srcs[0].url))} ↗</small></a>`:''}<a class="rm-alt" href="https://news.google.com/search?q=${encodeURIComponent(shortName(n))}" target="_blank" rel="noopener">More coverage ↗</a></div>
-      ${evFor(n).length?`<div class="sec"><h4>Latest reports${i._topic?' · '+esc(TOPICS.find(x=>x[0]===i._topic)?.[1]||''):''}</h4><ul class="tl evl">${evFor(n).slice(0,5).map(e=>`<li><span class="dt">${esc(agoShort(e.ts))} ago</span>${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.headline)}</a>`:esc(e.headline)}${e.source?`<small>${esc(e.source)}</small>`:''}</li>`).join('')}</ul></div>`:''}
+      ${moreFor(n,i).length?`<div class="sec"><h4>${i._topic?'More '+esc(TOPICS.find(x=>x[0]===i._topic)?.[1]||'')+' stories':'Latest reports'}</h4><ul class="tl evl">${moreFor(n,i).slice(0,5).map(e=>`<li><span class="dt">${esc(agoShort(e.ts))} ago</span>${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.headline)}</a>`:esc(e.headline)}${e.source?`<small>${esc(e.source)}</small>`:''}</li>`).join('')}</ul></div>`:''}
+      ${i._topic && i._overall.summary && overlap(i._overall.summary,i.headline)<.5?`<div class="sec c-wide"><h4>Wider picture · ${esc(shortName(n))}</h4><p>${esc(i._overall.summary)}</p></div>`:''}
       ${ups.length && !(NEWS._ev?.[n]||[]).length?`<div class="sec"><h4>Latest developments</h4><ul class="tl">${ups.map(u=>`<li><span class="dt">${esc(u.date)}</span>${esc(u.text)}</li>`).join('')}</ul></div>`:''}
       ${linksFor(n).length?`<div class="sec"><h4>Connected stories</h4><div class="links">${linksFor(n).map(([o,lab])=>`<button class="lnk" data-n="${esc(o)}"><span class="d" style="background:${LV[levelOf(o)].c}"></span><b>${flag(o)} ${esc(shortName(o))}</b><span>${esc(lab)}</span></button>`).join('')}</div></div>`:''}
       ${srcs.length?`<div class="sec"><h4>Sources · ${srcs.length}</h4><div class="srcs">${srcs.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener"><span>${esc(s.title)}</span><small>${esc(host(s.url))} ↗</small></a>`).join('')}</div></div>`:''}

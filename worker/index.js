@@ -2,8 +2,9 @@
 import { onRequestGet as news } from '../functions/api/news.js';
 import { onRequestPost as refresh, onRequestGet as refreshGet } from '../functions/api/refresh.js';
 import { onRequestGet as status } from '../functions/api/status.js';
+import { onRequestGet as brief } from '../functions/api/brief.js';
 
-const ROUTES = { 'GET /api/news': news, 'POST /api/refresh': refresh, 'GET /api/refresh': refreshGet, 'GET /api/status': status };
+const ROUTES = { 'GET /api/news': news, 'POST /api/refresh': refresh, 'GET /api/refresh': refreshGet, 'GET /api/status': status, 'GET /api/brief': brief };
 
 export default {
   async fetch(request, env, ctx) {
