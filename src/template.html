@@ -1246,7 +1246,7 @@ function normEvents(nw){
     .sort((a,b)=>b.ts-a.ts);
   const by={}; nw.events.forEach(e=>(by[e.country] ||= []).push(e)); nw._ev=by;
   for(const [n,v] of Object.entries(nw.countries||{})){ const ev=by[n]?.[0];
-    if(ev){ v.headline=ev.headline; v._last=ev.ts; } else v._last=Date.parse(v.lastEvent)||null; }
+    if(ev){ if(!nw.engine) v.headline=ev.headline; v._last=ev.ts; } else v._last=Date.parse(v.lastEvent)||null; }   // the live pipeline already picks the most serious recent headline
   return nw;
 }
 const agoShort=ts=>{ const m=Math.max(0,Math.round((Date.now()-ts)/60000)); return m<60?`${m||1}m`:m<48*60?`${Math.round(m/60)}h`:`${Math.round(m/1440)}d`; };
