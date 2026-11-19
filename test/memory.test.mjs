@@ -1,7 +1,7 @@
 // node test/memory.test.mjs — ongoing-crisis floor and per-topic levels
 import { buildEdition, updateMemory, floorFor } from '../lib/pipeline.js';
 const now = Date.parse('2026-11-19T12:00:00Z'), d = n => new Date(now - n * 864e5).toISOString();
-const ev = (c, sev, ageDays, tags = ['Conflict'], h = 'x') => ({ id: c + sev + ageDays + h, country: c, t: d(ageDays), headline: h + ' ' + c + ageDays, source: 'T', url: 'u' + c + ageDays + h, sev, tags });
+const ev = (c, sev, ageDays, tags = ['Conflict'], h = 'x') => ({ id: c + sev + ageDays + h, country: c, t: d(ageDays), headline: h + ' ' + c + ageDays, source: 'T', url: 'u' + c + ageDays + h, sev, tags, topics: tags.map(x => ({ k: x.toLowerCase(), sev })) });
 // Iran: serious conflict events 2, 4 and 6 days ago -> memory; today only a minor politics story
 let mem = updateMemory({}, [ev('Iran', 4, 6), ev('Iran', 5, 4), ev('Iran', 4, 2)], now);
 console.log('floor Iran', floorFor(mem.Iran, 'all', now), 'conflict', floorFor(mem.Iran, 'conflict', now), 'politics', floorFor(mem.Iran, 'politics', now));
