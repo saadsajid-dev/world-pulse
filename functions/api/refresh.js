@@ -2,10 +2,12 @@
 import { refreshEdition } from '../../lib/store.js';
 import { json } from '../../lib/store.js';
 
-export async function onRequestPost({ env, request }) {
+export async function onRequestPost({ env, request, waitUntil }) {
   try {
     const manual = new URL(request.url).searchParams.get('manual') === '1';
-    return json(await refreshEdition(env, { manual }));
+    const job = refreshEdition(env, { manual });
+    waitUntil?.(job.catch(() => {}));   // keep going for a while even if the visitor closes the page
+    return json(await job);
   } catch (e) {
     return json({ ok: false, error: String(e.message || e) }, 500);
   }
