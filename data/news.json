@@ -1,0 +1,1090 @@
+{
+ "updated": "2026-11-15T07:00:00Z",
+ "edition": "Sunday 15 November 2026",
+ "countries": {
+  "Ukraine": {
+   "level": "red",
+   "score": 95,
+   "tags": [
+    "Conflict",
+    "Diplomacy"
+   ],
+   "headline": "US-brokered three-way peace talks resume as the war grinds on",
+   "summary": "Ukraine, the US and Russia held trilateral talks in Abu Dhabi on 10 November covering security guarantees and Russia's demands. Zelenskyy called the format constructive, while US envoys Witkoff and Kushner moved on to meet Putin in Moscow and then Zelenskyy in Dublin. Russian strikes continue, including on Dnipro earlier this month.",
+   "updates": [
+    {
+     "date": "11 Nov",
+     "text": "Witkoff and Kushner plan talks with Putin in Moscow, then Zelenskyy in Dublin"
+    },
+    {
+     "date": "10 Nov",
+     "text": "First round of US-Ukraine-Russia talks in Abu Dhabi: 'very substantive' but 'pretty tough'"
+    },
+    {
+     "date": "3 Nov",
+     "text": "Russian airstrike destroys a residential building in Dnipro"
+    }
+   ],
+   "sources": [
+    {
+     "title": "European Pravda — Kushner and Witkoff plan meetings in Moscow and Dublin",
+     "url": "https://www.eurointegration.com.ua/eng/news/2026/11/11/7249769/"
+    },
+    {
+     "title": "CBS News — US to mediate Ukraine-Russia talks",
+     "url": "https://www.cbsnews.com/news/ukraine-russia-war-ceasefire-talks-witkoff/"
+    }
+   ]
+  },
+  "Russia": {
+   "level": "red",
+   "score": 88,
+   "tags": [
+    "Conflict",
+    "Diplomacy"
+   ],
+   "headline": "Putin hosts US envoys while eyeing a Trump–Xi summit in Shenzhen",
+   "summary": "The Kremlin agreed in October to resume three-way talks on ending the war in Ukraine, and US envoys returned to Moscow this week. Putin is expected at APEC in Shenzhen (18–19 Nov), where Trump has said he expects a three-way meeting with Putin and Xi.",
+   "updates": [
+    {
+     "date": "12 Nov",
+     "text": "US envoys Witkoff and Kushner travel to Moscow for talks with Putin"
+    },
+    {
+     "date": "8 Nov",
+     "text": "Trump says one of his Shenzhen meetings will likely be with Putin and Xi"
+    },
+    {
+     "date": "21 Oct",
+     "text": "Putin agrees to resume trilateral talks with Kyiv and Washington"
+    }
+   ],
+   "sources": [
+    {
+     "title": "AP via WBTV — Witkoff meets Putin in St. Petersburg",
+     "url": "https://www.wbtv.com/2026/10/21/trump-envoy-witkoff-meets-putin-st-petersburg-ukraine-war-talks/?outputType=amp"
+    },
+    {
+     "title": "Rio Times — APEC Shenzhen: what to watch",
+     "url": "https://www.riotimesonline.com/apec-shenzhen-summit-what-to-watch/"
+    }
+   ]
+  },
+  "Iran": {
+   "level": "red",
+   "score": 97,
+   "tags": [
+    "Conflict",
+    "Energy",
+    "Diplomacy"
+   ],
+   "headline": "US strikes on Qeshm Island continue as Qatar pushes an interim deal",
+   "summary": "The US-Iran war that began in late February remains unresolved. US forces have repeatedly struck air defences on Qeshm Island in the Strait of Hormuz this month, while Trump says 'a lot of progress' is being made in Qatar-mediated talks. Iran says strikes have damaged drug manufacturers, causing shortages of some essential medicines.",
+   "updates": [
+    {
+     "date": "9 Nov",
+     "text": "Iran's FDA says strikes hit 15 drug makers, straining supply of 37 essential medicines"
+    },
+    {
+     "date": "7 Nov",
+     "text": "Trump confirms new strikes on Qeshm, claims progress in negotiations"
+    },
+    {
+     "date": "2 Nov",
+     "text": "First US strike on Qeshm since June, described by US officials as 'defensive'"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Al Jazeera — Trump confirms new US strikes on Qeshm island",
+     "url": "https://aljazeera.com/news/2026/11/7/trump-confirms-new-us-strikes-on-irans-qeshm-island"
+    },
+    {
+     "title": "RFE/RL — Iran live blog",
+     "url": "https://www.rferl.org/a/iran-live-blog-trump-middle-east/33803414/lbl0lbi474806.html"
+    },
+    {
+     "title": "Drop Site — daily brief, 9 Nov",
+     "url": "https://www.dropsitenews.com/p/gaza-floods-trump-immigration-saudi-strikes"
+    }
+   ]
+  },
+  "Israel": {
+   "level": "red",
+   "score": 82,
+   "tags": [
+    "Conflict",
+    "Politics"
+   ],
+   "headline": "Strikes in Gaza and southern Lebanon continue despite truces",
+   "summary": "Israeli operations continue on several fronts: daily casualties are still reported in Gaza, and strikes and demolitions in southern Lebanon persist despite the June agreement. Settler violence in the occupied West Bank remains a major point of international criticism.",
+   "updates": [
+    {
+     "date": "9 Nov",
+     "text": "Gaza health ministry reports 3 killed and 15 injured in 24 hours"
+    },
+    {
+     "date": "1–6 Nov",
+     "text": "Dozens of mapped Israeli strikes and demolitions in southern Lebanon"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Drop Site — daily brief, 9 Nov",
+     "url": "https://www.dropsitenews.com/p/gaza-floods-trump-immigration-saudi-strikes"
+    },
+    {
+     "title": "WarHistory — 2026 Lebanon war, November archive",
+     "url": "https://warhistory.org/maps/lebanon/2026-11"
+    }
+   ]
+  },
+  "Palestine": {
+   "level": "red",
+   "score": 90,
+   "tags": [
+    "Conflict",
+    "Humanitarian"
+   ],
+   "headline": "Gaza casualties continue; West Bank settler violence at the forefront",
+   "summary": "Israeli attacks continue to kill and injure Palestinians in Gaza on a near-daily basis, and Palestinian prisoner groups report violent raids in detention. In the West Bank, settler attacks remain high and are drawing condemnation from European governments.",
+   "updates": [
+    {
+     "date": "9 Nov",
+     "text": "3 killed, 15 injured across Gaza in 24 hours (Palestinian Ministry of Health)"
+    },
+    {
+     "date": "5 Nov",
+     "text": "Settlers occupy a Palestinian house in Jericho"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Drop Site — daily brief, 9 Nov",
+     "url": "https://www.dropsitenews.com/p/gaza-floods-trump-immigration-saudi-strikes"
+    }
+   ]
+  },
+  "Lebanon": {
+   "level": "red",
+   "score": 74,
+   "tags": [
+    "Conflict"
+   ],
+   "headline": "Israeli shelling and demolitions persist in the south",
+   "summary": "Despite a June agreement, Israeli artillery, airstrikes and controlled demolitions continue in southern Lebanese villages. Western partners are backing a state monopoly on arms as Hezbollah refuses to disarm.",
+   "updates": [
+    {
+     "date": "6 Nov",
+     "text": "Busiest day of the month: 13 mapped Israeli strikes and explosions in the south"
+    },
+    {
+     "date": "5 Nov",
+     "text": "US Embassy circulates 'Friends of Lebanon' statement backing state monopoly on arms"
+    }
+   ],
+   "sources": [
+    {
+     "title": "WarHistory — 2026 Lebanon war, November archive",
+     "url": "https://warhistory.org/maps/lebanon/2026-11"
+    }
+   ]
+  },
+  "Sudan": {
+   "level": "red",
+   "score": 93,
+   "tags": [
+    "Conflict",
+    "Humanitarian"
+   ],
+   "headline": "Army pushes against RSF in Kordofan; humanitarian crisis deepens",
+   "summary": "One year after El Fasher fell to the Rapid Support Forces, fighting has shifted to Kordofan, where the army and its allies say they are advancing in West Kordofan. Drone attacks are disrupting electricity, and relations with Ethiopia have sharply deteriorated. The war has displaced millions.",
+   "updates": [
+    {
+     "date": "8 Nov",
+     "text": "Army and allies advance against RSF in West Kordofan, claim to down a third drone"
+    },
+    {
+     "date": "2–8 Nov",
+     "text": "Sudan closes Ethiopia's consulate in Gedaref amid rising tensions"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Sudan Tribune — Army advances in West Kordofan",
+     "url": "https://sudantribune.com/?p=321005"
+    },
+    {
+     "title": "Horn Review — Weekly Geopolitical Report No. 45",
+     "url": "https://hornreview.org/wp-content/uploads/2026/11/Weekly-Geopolitical-Report-Issue-No-45.pdf"
+    },
+    {
+     "title": "Arab News — One year since the fall of El Fasher",
+     "url": "https://www.arabnews.pk/middle-east/one-year-since-the-fall-of-el-fasher-sudans-civilians-continue-to-suffer-3005386"
+    }
+   ]
+  },
+  "Dem. Rep. Congo": {
+   "level": "red",
+   "score": 80,
+   "tags": [
+    "Conflict"
+   ],
+   "headline": "New rebel alliance with ex-president Kabila threatens wider war",
+   "summary": "Former president Joseph Kabila has joined an armed coalition seeking to challenge the government 'by all means, including force', and analysts warn the insurgency in the east could spread. Peace efforts have repeatedly failed to stop the fighting.",
+   "updates": [
+    {
+     "date": "Oct",
+     "text": "Kabila joins armed coalition against the Tshisekedi government"
+    },
+    {
+     "date": "10 Nov",
+     "text": "Congo War Security Review tracks ongoing clashes in the east"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Foreign Policy — What a new rebel alliance means for Congo",
+     "url": "https://foreignpolicy.com/2026/10/21/what-a-new-rebel-alliance-means-for-congo/"
+    },
+    {
+     "title": "Critical Threats — Congo War Security Review",
+     "url": "https://www.criticalthreats.org/briefs/congo-war-security-review/november-11-2026"
+    }
+   ]
+  },
+  "Cuba": {
+   "level": "red",
+   "score": 78,
+   "tags": [
+    "Crisis",
+    "Sanctions"
+   ],
+   "headline": "New US sanctions as Cuba stages national defence drills",
+   "summary": "Cuba faces its worst economic crisis since the 1959 revolution, with blackouts and fuel shortages. This month the US Treasury announced new sanctions, which President Díaz-Canel rejected, while Havana ran its Moncada 2026 national defence exercise.",
+   "updates": [
+    {
+     "date": "7 Nov",
+     "text": "Díaz-Canel rejects the new US sanctions"
+    },
+    {
+     "date": "5 Nov",
+     "text": "US Treasury announces new sanctions on Cuba"
+    },
+    {
+     "date": "4–5 Nov",
+     "text": "Moncada 2026 national defence drill"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Rio Times — Latin America Defense Monitor, 1–7 Nov",
+     "url": "https://www.riotimesonline.com/latin-america-defense-monitor-november-1-7-2026/"
+    }
+   ]
+  },
+  "United States of America": {
+   "level": "orange",
+   "score": 72,
+   "tags": [
+    "Politics",
+    "Elections"
+   ],
+   "headline": "Democrats take both chambers of Congress in midterm landslide",
+   "summary": "The 3 November midterms ended Republican control of Congress, with Democrats flipping seven Senate seats and winning a large House majority, including wins in Texas. Trump accepted the result, and has since named Stephen Miller as chief of staff. He heads to APEC in China next week.",
+   "updates": [
+    {
+     "date": "7 Nov",
+     "text": "Trump names Stephen Miller chief of staff, replacing Susie Wiles"
+    },
+    {
+     "date": "4 Nov",
+     "text": "Democrats confirmed to control House and Senate"
+    },
+    {
+     "date": "3 Nov",
+     "text": "Record midterm turnout: more than 124 million ballots"
+    }
+   ],
+   "sources": [
+    {
+     "title": "AP via Action News Jax — Democrats capture both chambers",
+     "url": "https://www.actionnewsjax.com/news/trending/election-2026-democrats-capture-both-houses-congress/5ILOWTVABVDPZFYP7VBBCX4EWE/?outputType=amp"
+    },
+    {
+     "title": "Gray DC — Midterm results: three things to know",
+     "url": "https://www.live5news.com/2026/11/04/midterm-election-results-three-things-know/?outputType=amp"
+    },
+    {
+     "title": "Business Standard — World news, 7 Nov",
+     "url": "https://www.business-standard.com/world-news/iran-strikes-kuwait-after-us-bombardments-gulf-tensions-escalate-126090300989_1.html"
+    }
+   ]
+  },
+  "China": {
+   "level": "orange",
+   "score": 70,
+   "tags": [
+    "Diplomacy",
+    "Trade"
+   ],
+   "headline": "Shenzhen hosts APEC — a first Trump–Xi–Putin meeting is possible",
+   "summary": "Xi Jinping hosts APEC leaders in Shenzhen on 18–19 November. Beijing has confirmed discussions about an unprecedented three-way meeting with Trump and Putin, and a Trump–Xi bilateral would be their third this year, with the trade truce due to expire in January.",
+   "updates": [
+    {
+     "date": "18–19 Nov",
+     "text": "APEC Economic Leaders' Meeting, Shenzhen"
+    },
+    {
+     "date": "7 Nov",
+     "text": "Beijing confirms talks on a possible Xi–Trump–Putin meeting"
+    },
+    {
+     "date": "7 Nov",
+     "text": "China vows to hit back over new US sanctions on two Chinese firms"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Korea Times — China confirms discussions on Xi-Trump-Putin meeting",
+     "url": "https://www.koreatimes.co.kr/world/20261107/china-confirms-discussions-underway-on-historic-xi-trump-putin-meeting"
+    },
+    {
+     "title": "Al Jazeera — What a Trump-Xi-Putin summit could mean",
+     "url": "https://www.aljazeera.com/amp/news/2026/11/6/what-a-trump-xi-putin-summit-would-mean-and-what-it-wouldnt"
+    }
+   ]
+  },
+  "Turkey": {
+   "level": "orange",
+   "score": 58,
+   "tags": [
+    "Climate",
+    "Diplomacy"
+   ],
+   "headline": "COP31 climate summit underway in Antalya",
+   "summary": "Nearly 200 countries are meeting in Antalya (9–20 Nov) under an unusual split presidency: Türkiye's Murat Kurum is COP31 President and Australia's Chris Bowen runs the negotiations. Climate finance disagreements surfaced on day one.",
+   "updates": [
+    {
+     "date": "20 Nov",
+     "text": "Scheduled close of COP31"
+    },
+    {
+     "date": "9 Nov",
+     "text": "COP31 opens; finance disputes emerge immediately"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Balkan Green Energy News — COP31 kicks off in Antalya",
+     "url": "https://balkangreenenergynews.com/cop31-opens-amid-warnings-that-2026-will-be-among-hottest-years-on-record/"
+    },
+    {
+     "title": "WAM — COP31 opens in Antalya",
+     "url": "https://www.wam.ae/en/article/c363e0p-cop31-opens-antalya-with-hopes-turn-climate"
+    }
+   ]
+  },
+  "Qatar": {
+   "level": "orange",
+   "score": 55,
+   "tags": [
+    "Diplomacy"
+   ],
+   "headline": "Doha mediates between Washington and Tehran",
+   "summary": "Qatar is facilitating a real-time exchange of proposals between the US and Iran and pushing an interim deal to halt escalation. Trump and Qatar's emir discussed West Asia de-escalation earlier this month.",
+   "updates": [
+    {
+     "date": "4 Nov",
+     "text": "Qatar says it is 'bridging the gap' as both sides review proposals"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Al Jazeera — Iran says US reply to Hormuz plan 'unconvincing'",
+     "url": "https://aljazeera.com/news/2026/11/4/iran-says-us-reply-to-hormuz-plan-unconvincing-trump-confirms-strikes"
+    }
+   ]
+  },
+  "United Arab Emirates": {
+   "level": "orange",
+   "score": 45,
+   "tags": [
+    "Diplomacy"
+   ],
+   "headline": "Abu Dhabi hosts US-Ukraine-Russia talks",
+   "summary": "The first round of renewed trilateral talks on ending the war in Ukraine took place in Abu Dhabi on 10 November, with the US calling it productive but saying much work remains.",
+   "updates": [
+    {
+     "date": "10 Nov",
+     "text": "Trilateral Ukraine talks held in Abu Dhabi"
+    }
+   ],
+   "sources": [
+    {
+     "title": "European Pravda — Abu Dhabi talks",
+     "url": "https://www.eurointegration.com.ua/eng/news/2026/11/11/7249769/"
+    }
+   ]
+  },
+  "Pakistan": {
+   "level": "orange",
+   "score": 48,
+   "tags": [
+    "Diplomacy",
+    "Security"
+   ],
+   "headline": "Islamabad relays Iran's latest peace proposal",
+   "summary": "Iran's foreign minister delivered Tehran's latest proposal to Pakistan, which is acting as a channel to Washington. The US had not formally responded as of 7 November.",
+   "updates": [
+    {
+     "date": "5 Nov",
+     "text": "Iran's FM hands latest proposal to Pakistan"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Al Jazeera — Qeshm island and Hormuz hit as mediators try to prevent escalation",
+     "url": "https://aljazeera.com/news/2026/11/7/qeshm-island-and-hormuz-hit-as-mediators-try-to-prevent-us-iran-escalation"
+    }
+   ]
+  },
+  "Afghanistan": {
+   "level": "orange",
+   "score": 52,
+   "tags": [
+    "Security"
+   ],
+   "headline": "Armed opposition claims a string of attacks on the Taliban",
+   "summary": "The Afghanistan United Front says it carried out 16 attacks in one week that killed 18 Taliban fighters, a sign of growing low-level insurgency against Taliban rule.",
+   "updates": [
+    {
+     "date": "30 Oct",
+     "text": "Afghanistan United Front claims 16 attacks in a week"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Afghanistan International",
+     "url": "https://www.afintl.com/en/202611021927"
+    }
+   ]
+  },
+  "Yemen": {
+   "level": "orange",
+   "score": 60,
+   "tags": [
+    "Conflict"
+   ],
+   "headline": "30 reported killed as regional tensions run high",
+   "summary": "Reports on 6 November said 30 people were killed in Yemen, as the US and Qatar discussed de-escalation across West Asia.",
+   "updates": [
+    {
+     "date": "6 Nov",
+     "text": "30 killed in Yemen, reported alongside Trump–Qatar emir talks"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Business Standard — World news, 6–7 Nov",
+     "url": "https://www.business-standard.com/world-news/iran-strikes-kuwait-after-us-bombardments-gulf-tensions-escalate-126090300989_1.html"
+    }
+   ]
+  },
+  "Mali": {
+   "level": "red",
+   "score": 70,
+   "tags": [
+    "Conflict",
+    "Security"
+   ],
+   "headline": "Jihadist blockade of Bamako's supply routes enters its second year",
+   "summary": "Mali's capital relies on military-escorted fuel convoys after a year-long blockade of roads by armed groups, and the junta has arrested generals and a French embassy worker over an alleged destabilisation plot.",
+   "updates": [
+    {
+     "date": "Sep",
+     "text": "900+ fuel tankers reach Bamako under escort"
+    },
+    {
+     "date": "Recent",
+     "text": "Junta detains generals and a French national over alleged plot"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Rio Times — Africa Intelligence Brief",
+     "url": "https://www.riotimesonline.com/africa-intelligence-brief-friday-september-25-2026/"
+    },
+    {
+     "title": "Foreign Policy — Congo's peace negotiations fall through",
+     "url": "https://www.yahoo.com/news/articles/congo-peace-negotiations-fall-050039998.html"
+    }
+   ]
+  },
+  "Ethiopia": {
+   "level": "orange",
+   "score": 55,
+   "tags": [
+    "Diplomacy",
+    "Security"
+   ],
+   "headline": "Relations with Sudan sour as Khartoum shuts consulate",
+   "summary": "Sudan closed Ethiopia's consulate in Gedaref amid unverified allegations, which Addis Ababa rejects. Ethiopia this week reaffirmed its strategic partnership with China.",
+   "updates": [
+    {
+     "date": "2–8 Nov",
+     "text": "Sudan closes Ethiopian consulate in Gedaref"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Horn Review — Weekly Report No. 45",
+     "url": "https://hornreview.org/wp-content/uploads/2026/11/Weekly-Geopolitical-Report-Issue-No-45.pdf"
+    }
+   ]
+  },
+  "Somalia": {
+   "level": "orange",
+   "score": 50,
+   "tags": [
+    "Politics"
+   ],
+   "headline": "President fires chief justice amid fight over election timing",
+   "summary": "President Mohamud dismissed Chief Justice Bashe Yusuf Ahmed on 4 November after a court order for elections within 90 days, which the opposition Somali Future Council backs.",
+   "updates": [
+    {
+     "date": "4 Nov",
+     "text": "Chief Justice dismissed and predecessor reappointed"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Africa Center — Africa Media Review, 9 Nov",
+     "url": "https://africacenter.org/daily-media-review/africa-media-review-for-november-9-2026/"
+    }
+   ]
+  },
+  "South Africa": {
+   "level": "orange",
+   "score": 57,
+   "tags": [
+    "Elections",
+    "Politics"
+   ],
+   "headline": "ANC slumps to worst-ever result in local elections",
+   "summary": "The ANC won just 30.76% in the 4 November municipal elections, down from about 46% in 2021, and lost outright control of every major metro. The DA came second with about 24.6%, and coalition talks now follow.",
+   "updates": [
+    {
+     "date": "8 Nov",
+     "text": "Final results: ANC 30.8%, DA 24.6%, MK 9.7%"
+    },
+    {
+     "date": "4 Nov",
+     "text": "Municipal elections held; turnout up on 2021"
+    }
+   ],
+   "sources": [
+    {
+     "title": "AP via NY1 — ANC humbled by worst election results",
+     "url": "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/11/08/south-africas-anc-is-humbled-by-its-worst-election-results-as-it-continues-its-decline"
+    },
+    {
+     "title": "Club of Mozambique — ANC slumps to 30.76%",
+     "url": "https://clubofmozambique.com/news/just-in-south-africas-anc-slumps-to-30-76-per-cent-of-votes-in-worst-ever-election-result/"
+    }
+   ]
+  },
+  "S. Sudan": {
+   "level": "orange",
+   "score": 42,
+   "tags": [
+    "Elections"
+   ],
+   "headline": "First post-independence general election planned for December",
+   "summary": "South Sudan plans to hold its first general elections since independence in 2011 in December 2026.",
+   "updates": [
+    {
+     "date": "Dec",
+     "text": "General election scheduled"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Africa Center — Africa Media Review, 9 Nov",
+     "url": "https://africacenter.org/daily-media-review/africa-media-review-for-november-9-2026/"
+    }
+   ]
+  },
+  "Venezuela": {
+   "level": "orange",
+   "score": 62,
+   "tags": [
+    "Security",
+    "Politics"
+   ],
+   "headline": "Strike on an ELN camp raises questions about the US role",
+   "summary": "Ten months after the US removed Nicolás Maduro, a strike on an ELN guerrilla camp has raised fresh questions about US military involvement in the region.",
+   "updates": [
+    {
+     "date": "1–7 Nov",
+     "text": "Strike on ELN camp near the Colombian border"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Rio Times — Latin America Defense Monitor, 1–7 Nov",
+     "url": "https://www.riotimesonline.com/latin-america-defense-monitor-november-1-7-2026/"
+    }
+   ]
+  },
+  "Colombia": {
+   "level": "orange",
+   "score": 50,
+   "tags": [
+    "Security",
+    "Diplomacy"
+   ],
+   "headline": "Border tensions and pressure from Washington",
+   "summary": "Colombia faces spillover from the post-Maduro transition in Venezuela, including action against ELN guerrillas who operate across the border, alongside continued US pressure over drug trafficking.",
+   "updates": [
+    {
+     "date": "1–7 Nov",
+     "text": "ELN camp struck across the Venezuelan border"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Rio Times — Latin America Defense Monitor",
+     "url": "https://www.riotimesonline.com/latin-america-defense-monitor-november-1-7-2026/"
+    }
+   ]
+  },
+  "Haiti": {
+   "level": "orange",
+   "score": 55,
+   "tags": [
+    "Security",
+    "Humanitarian"
+   ],
+   "headline": "Foreign troops expand anti-gang deployment",
+   "summary": "El Salvador's deployment in Haiti is reported at more than 2,000 soldiers as foreign forces continue operations against armed gangs.",
+   "updates": [
+    {
+     "date": "Nov",
+     "text": "El Salvador deployment put above 2,000 troops"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Rio Times — Latin America Defense Monitor",
+     "url": "https://www.riotimesonline.com/latin-america-defense-monitor-november-1-7-2026/"
+    }
+   ]
+  },
+  "New Zealand": {
+   "level": "orange",
+   "score": 48,
+   "tags": [
+    "Elections",
+    "Politics"
+   ],
+   "headline": "Hung result: no clear winner until final count on 27 November",
+   "summary": "Neither National nor Labour cleared 30% in the 7 November election. Luxon's bloc is ahead by a razor-thin margin, newcomer Opportunity party won seven seats, and about 400,000 special votes are still being counted.",
+   "updates": [
+    {
+     "date": "27 Nov",
+     "text": "Official results due; coalition talks follow"
+    },
+    {
+     "date": "7 Nov",
+     "text": "Election night: National 29.2%, Labour 29.4%"
+    }
+   ],
+   "sources": [
+    {
+     "title": "AP via NY1 — New Zealanders won't know for weeks who won",
+     "url": "https://ny1.com/nyc/all-boroughs/ap-top-news/2026/11/08/new-zealanders-wont-know-for-weeks-who-won-the-election-as-neither-side-secures-clear-victory"
+    },
+    {
+     "title": "Wikipedia — 2026 New Zealand general election",
+     "url": "https://en.wikipedia.org/wiki/2026_New_Zealand_general_election"
+    }
+   ]
+  },
+  "Italy": {
+   "level": "orange",
+   "score": 40,
+   "tags": [
+    "Cyber",
+    "Security"
+   ],
+   "headline": "Meloni blames pro-Russian hackers for cyberattack on foreign minister",
+   "summary": "Italy's government has attributed a cyberattack targeting its foreign minister to pro-Russian hackers, part of a wider pattern of hybrid attacks across Europe.",
+   "updates": [
+    {
+     "date": "7 Nov",
+     "text": "Meloni attributes attack to pro-Russian groups"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Business Standard — World news, 7 Nov",
+     "url": "https://www.business-standard.com/world-news/iran-strikes-kuwait-after-us-bombardments-gulf-tensions-escalate-126090300989_1.html"
+    }
+   ]
+  },
+  "Finland": {
+   "level": "orange",
+   "score": 38,
+   "tags": [
+    "Security"
+   ],
+   "headline": "Helsinki weighs Ukraine-style anti-tank barriers on Russian border",
+   "summary": "Finland is considering building anti-tank defences modelled on Ukraine's as Russia rearms.",
+   "updates": [
+    {
+     "date": "7 Nov",
+     "text": "Anti-tank barrier plans under consideration"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Business Standard — World news, 7 Nov",
+     "url": "https://www.business-standard.com/world-news/iran-strikes-kuwait-after-us-bombardments-gulf-tensions-escalate-126090300989_1.html"
+    }
+   ]
+  },
+  "France": {
+   "level": "orange",
+   "score": 36,
+   "tags": [
+    "Cyber"
+   ],
+   "headline": "Paris and Tehran trade accusations over 'fridge' cyberattacks",
+   "summary": "Iran rejected French accusations over cyber incidents that affected hundreds of smart fridges in October, and blamed the French government instead.",
+   "updates": [
+    {
+     "date": "11 Nov",
+     "text": "Iran rejects France's 'baseless accusations'"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Euronews — 11 November 2026",
+     "url": "https://www.euronews.com/2026/11/11"
+    }
+   ]
+  },
+  "United Kingdom": {
+   "level": "orange",
+   "score": 40,
+   "tags": [
+    "Politics",
+    "Security"
+   ],
+   "headline": "UK–EU summit on 20 November; airbase plot charges",
+   "summary": "Prime Minister Andy Burnham has promised a 'serious dialogue' on the UK's place in Europe ahead of the second post-Brexit UK–EU summit. Separately, men linked to London synagogue attacks were charged over a plot against a UK airbase.",
+   "updates": [
+    {
+     "date": "20 Nov",
+     "text": "UK–EU summit in Brussels"
+    },
+    {
+     "date": "11 Nov",
+     "text": "Charges brought over UK airbase plot"
+    }
+   ],
+   "sources": [
+    {
+     "title": "EUobserver — UK's path back to the EU",
+     "url": "https://euobserver.com/tickers/146555"
+    },
+    {
+     "title": "Euronews — 11 November 2026",
+     "url": "https://www.euronews.com/2026/11/11"
+    }
+   ]
+  },
+  "Belgium": {
+   "level": "orange",
+   "score": 34,
+   "tags": [
+    "Politics"
+   ],
+   "headline": "King Philippe steps in to resolve federal government deadlock",
+   "summary": "The King has been holding consultations with party leaders to break a deadlock within the federal government.",
+   "updates": [
+    {
+     "date": "3 Nov",
+     "text": "Royal consultations with party leaders"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Anadolu Agency — Europe",
+     "url": "https://www.aa.com.tr/en/europe/german-social-democrats-announ"
+    }
+   ]
+  },
+  "Poland": {
+   "level": "orange",
+   "score": 33,
+   "tags": [
+    "Politics"
+   ],
+   "headline": "Riot police deployed at the Constitutional Tribunal",
+   "summary": "Anti-riot police stood guard at Poland's Constitutional Tribunal in Warsaw amid an ongoing dispute over the court.",
+   "updates": [
+    {
+     "date": "3 Nov",
+     "text": "Police guard the Tribunal grounds"
+    }
+   ],
+   "sources": [
+    {
+     "title": "EUobserver",
+     "url": "https://euobserver.com/?p=3564"
+    }
+   ]
+  },
+  "Spain": {
+   "level": "orange",
+   "score": 32,
+   "tags": [
+    "Disaster"
+   ],
+   "headline": "Train accident near Toledo",
+   "summary": "Crews worked to clear wreckage after a train accident in Urda, Toledo province.",
+   "updates": [
+    {
+     "date": "4 Nov",
+     "text": "Train derailment/accident in Urda"
+    }
+   ],
+   "sources": [
+    {
+     "title": "EUobserver",
+     "url": "https://euobserver.com/?p=3564"
+    }
+   ]
+  },
+  "Peru": {
+   "level": "green",
+   "score": 30,
+   "tags": [
+    "Religion",
+    "Society"
+   ],
+   "headline": "Pope Leo XIV's emotional homecoming tour",
+   "summary": "The Peruvian-American pope is visiting Lima, Chiclayo, Cusco and Pucallpa from 11–16 November, drawing millions. He met President Keiko Fujimori on arrival and holds a farewell Mass in Lima on Monday.",
+   "updates": [
+    {
+     "date": "16 Nov",
+     "text": "Farewell Mass at Las Palmas Air Base, Lima"
+    },
+    {
+     "date": "11 Nov",
+     "text": "Pope arrives in Lima, meets President Keiko Fujimori"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Andina — Pope Leo XIV returns home: itinerary",
+     "url": "https://andina.pe/agencia/noticia-pope-leo-xiv-returns-home-find-out-about-his-itinerary-in-peru-1099472.aspx"
+    },
+    {
+     "title": "Vatican — Apostolic Journey programme",
+     "url": "https://www.vatican.va/content/leo-xiv/en/travels/2026/documents/uruguay-argentina-peru-6-17novembre2026.html"
+    }
+   ]
+  },
+  "Argentina": {
+   "level": "green",
+   "score": 20,
+   "tags": [
+    "Religion"
+   ],
+   "headline": "Pope Leo XIV visited Buenos Aires",
+   "summary": "Buenos Aires hosted the pope from 8–10 November as part of his South American tour.",
+   "updates": [
+    {
+     "date": "9 Nov",
+     "text": "Papal Mass in Buenos Aires"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Vatican — Apostolic Journey programme",
+     "url": "https://www.vatican.va/content/leo-xiv/en/travels/2026/documents/uruguay-argentina-peru-6-17novembre2026.html"
+    }
+   ]
+  },
+  "Uruguay": {
+   "level": "green",
+   "score": 15,
+   "tags": [
+    "Religion"
+   ],
+   "headline": "First stop of the papal tour",
+   "summary": "Pope Leo XIV began his South American tour in Montevideo on 6–8 November.",
+   "updates": [
+    {
+     "date": "6 Nov",
+     "text": "Pope arrives in Montevideo"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Vatican — Apostolic Journey programme",
+     "url": "https://www.vatican.va/content/leo-xiv/en/travels/2026/documents/uruguay-argentina-peru-6-17novembre2026.html"
+    }
+   ]
+  },
+  "Australia": {
+   "level": "green",
+   "score": 25,
+   "tags": [
+    "Climate"
+   ],
+   "headline": "Australia's Chris Bowen leads COP31 negotiations",
+   "summary": "Under the co-presidency deal, Australia's climate minister Chris Bowen serves as COP31 President of Negotiations in Antalya and warned the world is on track to exceed 1.5°C.",
+   "updates": [
+    {
+     "date": "9 Nov",
+     "text": "Bowen opens negotiations at COP31"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Daily Sabah — COP31 opens in Türkiye",
+     "url": "https://www.dailysabah.com/turkiye/cop31-opens-in-turkiye-with-push-to-turn-climate-pledges-into-action/news/amp"
+    }
+   ]
+  },
+  "Ireland": {
+   "level": "green",
+   "score": 22,
+   "tags": [
+    "Diplomacy"
+   ],
+   "headline": "Dublin to host US envoys' meeting with Zelenskyy",
+   "summary": "After Moscow, US envoys Witkoff and Kushner are due to meet Ukraine's president in Dublin.",
+   "updates": [
+    {
+     "date": "Mid-Nov",
+     "text": "Zelenskyy–US envoy meeting in Dublin"
+    }
+   ],
+   "sources": [
+    {
+     "title": "European Pravda",
+     "url": "https://www.eurointegration.com.ua/eng/news/2026/11/11/7249769/"
+    }
+   ]
+  },
+  "Canada": {
+   "level": "green",
+   "score": 20,
+   "tags": [
+    "Trade"
+   ],
+   "headline": "Carney says Trump remains central to trade talks",
+   "summary": "Despite the Democrats' midterm wins, Prime Minister Mark Carney says trade negotiations still run through the White House.",
+   "updates": [
+    {
+     "date": "Nov",
+     "text": "Carney comments on post-midterm trade talks"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Boston Globe — World",
+     "url": "https://www.bostonglobe.com/world/?p1=BGMenu_Sections"
+    }
+   ]
+  },
+  "Greece": {
+   "level": "green",
+   "score": 18,
+   "tags": [
+    "Weather"
+   ],
+   "headline": "New wave of storms forecast",
+   "summary": "Forecasters warned of a fresh wave of storms in Greece this week.",
+   "updates": [
+    {
+     "date": "11 Nov",
+     "text": "Storm warning"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Light News — EU",
+     "url": "https://oauth.lightnews.app/countries/EU?edition=us"
+    }
+   ]
+  }
+ },
+ "links": [
+  {
+   "a": "United States of America",
+   "b": "China",
+   "label": "APEC Shenzhen, 18–19 Nov: possible Trump–Xi meeting"
+  },
+  {
+   "a": "Russia",
+   "b": "China",
+   "label": "Putin expected at APEC; possible three-way summit"
+  },
+  {
+   "a": "United States of America",
+   "b": "Iran",
+   "label": "US strikes on Qeshm Island"
+  },
+  {
+   "a": "Qatar",
+   "b": "Iran",
+   "label": "Qatar mediating US–Iran proposals"
+  },
+  {
+   "a": "Pakistan",
+   "b": "Iran",
+   "label": "Iran's latest proposal relayed via Pakistan"
+  },
+  {
+   "a": "Russia",
+   "b": "Ukraine",
+   "label": "War and trilateral peace talks"
+  },
+  {
+   "a": "United Arab Emirates",
+   "b": "Ukraine",
+   "label": "Abu Dhabi trilateral talks, 10 Nov"
+  },
+  {
+   "a": "Ireland",
+   "b": "Ukraine",
+   "label": "US envoys to meet Zelenskyy in Dublin"
+  },
+  {
+   "a": "Sudan",
+   "b": "Ethiopia",
+   "label": "Sudan closes Ethiopian consulate in Gedaref"
+  },
+  {
+   "a": "Israel",
+   "b": "Lebanon",
+   "label": "Israeli strikes in southern Lebanon"
+  },
+  {
+   "a": "United States of America",
+   "b": "Cuba",
+   "label": "New US sanctions on Cuba"
+  },
+  {
+   "a": "Peru",
+   "b": "Argentina",
+   "label": "Pope Leo XIV's South American tour"
+  }
+ ]
+}
