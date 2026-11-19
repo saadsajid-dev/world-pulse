@@ -2969,7 +2969,7 @@ async function liveRefresh(manual){
   setFetch('idle','');
 }
 if(API){
-  apiNews().then(j=>{ if(j.payload) applyPayload(j.payload); else introReady(); if(j.stale && !j.refreshing) liveRefresh(false); }).catch(()=>introReady());
+  apiNews().then(j=>{ if(j.payload) applyPayload(j.payload); else introReady(); if(j.stale) liveRefresh(false); }).catch(()=>introReady());
 }
 
 /* ================= CLAUDE (inside claude.ai) ================= */
