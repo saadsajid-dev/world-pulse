@@ -3,6 +3,8 @@
   "name": "world-pulse",
   "main": "worker/index.js",
   "compatibility_date": "2025-09-01",
+  "workers_dev": true,      // keep the free world-pulse.<account>.workers.dev address switched on
+  "preview_urls": true,
   "assets": {
     "directory": "./site",
     "binding": "ASSETS",
