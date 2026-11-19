@@ -451,6 +451,8 @@ a{color:var(--cyan)}
 .c-hl .wd{display:inline-block;opacity:0;transform:translateY(6px);filter:blur(3px);animation:wdIn .55s cubic-bezier(.2,.9,.2,1) forwards}
 @keyframes wdIn{to{opacity:1;transform:none;filter:none}}
 .c-hl{font-family:'Space Grotesk';font-size:21px;line-height:1.3;font-weight:600;margin-bottom:10px}
+.c-topic{font-size:11px;letter-spacing:.04em;color:var(--muted);margin:2px 0 6px}.c-topic b{color:var(--cyan);font-weight:600}
+.c-also{font-size:12.5px;line-height:1.5;color:var(--muted);margin:-4px 0 12px}.c-also b{color:#c3cce0;font-weight:600}
 .c-sum{font-size:14.5px;line-height:1.65;color:#c9d2e6}
 .sec{margin-top:22px}
 .sec h4{font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.18em;color:var(--muted);font-weight:600;margin-bottom:10px;text-transform:uppercase}
@@ -760,7 +762,17 @@ const LV = {
   none:{c:'#6b7f9e',rgb:[107,127,158],label:'No news'}
 };
 const flag = n => { const a = ISO[n]; if(!a) return '🌐'; return [...a.toUpperCase()].map(ch=>String.fromCodePoint(127397+ch.charCodeAt(0))).join(''); };
-const info = n => NEWS.countries[n] || null;
+const baseInfo = n => NEWS.countries[n] || null;
+/* with a topic selected, a country is shown by that topic's own news: level, score, headline and briefing */
+const TV=new Map(); let TVkey='';
+const info = n => {
+  const b=NEWS.countries[n]; if(!b) return null;
+  if(topic==='all' || HISTV || !b.byTopic) return b;
+  const k=NEWS.updated+'|'+topic; if(k!==TVkey){ TV.clear(); TVkey=k; }
+  if(TV.has(n)) return TV.get(n);
+  const bt=b.byTopic[topic], v=bt?{...b, ...bt, tags:b.tags, _topic:topic, _overall:b}:b;
+  TV.set(n,v); return v;
+};
 let HISTV=null, topic='all';   // timeline snapshot being viewed (null = live) · active topic filter
 const HL={r:'red',o:'orange',g:'green'};
 const levelOf = n => HISTV ? (HL[HISTV[n]?.[0]]||'none') : ((info(n)?.level) || 'none');
@@ -1087,7 +1099,8 @@ function frame(now){
   // hover outline + lifted country
   if(hoverName!==tourName) drawTrace(now,PC,px);
   // starred countries: a stronger, steady glow in their own news colour + a crisp bright edge (no dashes, no pulsing)
-  if(WATCH.size){ for(const n of WATCH){ const p=PC.by.get(n); if(!p) continue; const l=levelOf(n); if(hidden.has(l)) continue; const c=l==='none'?[150,175,215]:LV[l].rgb, cb=c.map(v=>Math.min(255,v+80));
+  if(WATCH.size){ for(const n of WATCH){ const p=PC.by.get(n); if(!p) continue; const l=levelOf(n); if(hidden.has(l)) continue;
+    if(drawLevel(n)==='none' && topic!=='all') continue; if(solo && !soloMatch(n)) continue; if(focusActive() && !focusSet.has(n)) continue;   /* a star does not override the active filter */ const c=l==='none'?[150,175,215]:LV[l].rgb, cb=c.map(v=>Math.min(255,v+80));
       ctx.strokeStyle=rgba(c,.14); ctx.lineWidth=14*px; ctx.stroke(p); ctx.strokeStyle=rgba(c,.3); ctx.lineWidth=6*px; ctx.stroke(p);
       ctx.strokeStyle=rgba(cb,.95); ctx.lineWidth=1.3*px; ctx.stroke(p); ctx.fillStyle=rgba(cb,.1); ctx.fill(p); } }
   if(watchFlash){ const ft2=(now-watchFlash.t0)/750, p=PC.by.get(watchFlash.n); if(ft2>1||!p) watchFlash=null; else { const a=1-ft2; ctx.fillStyle=`rgba(255,255,255,${.45*a})`; ctx.fill(p); ctx.strokeStyle=`rgba(255,255,255,${a})`; ctx.lineWidth=(2+6*ft2)*px; ctx.stroke(p); } }
@@ -1293,7 +1306,7 @@ const EV_MAX=48*3600e3;
 function normEvents(nw){
   const now=Date.now(), seen=new Set();
   nw.events=(Array.isArray(nw.events)?nw.events:[]).filter(e=>e&&e.country&&e.headline&&byName.has(e.country)).map(e=>({...e,ts:Date.parse(e.t)||Date.parse(nw.updated)||now}))
-    .filter(e=>{ const k=(e.url||'')+'|'+String(e.headline).toLowerCase().slice(0,60); if(seen.has(k)) return false; seen.add(k); return now-e.ts<=EV_MAX && e.ts<=now+3600e3; })
+    .filter(e=>{ const k=e.country+'|'+(e.url||'')+'|'+String(e.headline).toLowerCase().slice(0,60); if(seen.has(k)) return false; seen.add(k); return now-e.ts<=EV_MAX && e.ts<=now+3600e3; })
     .sort((a,b)=>b.ts-a.ts);
   const by={}; nw.events.forEach(e=>(by[e.country] ||= []).push(e)); nw._ev=by;
   for(const [n,v] of Object.entries(nw.countries||{})){ const ev=by[n]?.[0];
@@ -1622,6 +1635,7 @@ function hideTip(){ tip.classList.remove('on'); }
 /* ================= SIDE LIST / TICKER / STATS ================= */
 function ranked(){ return Object.entries(NEWS.countries).filter(([n])=>byName.has(n)).sort((a,b)=>b[1].score-a[1].score); }
 function buildUI(){
+  try{ renderTopics(); }catch{}
   document.getElementById('edition').textContent=NEWS.edition||'';
   const r=ranked();
   const cnt={red:0,orange:0,green:0,none:0};
@@ -1727,6 +1741,7 @@ function step(d){
 
 function linksFor(n){ return (NEWS.links||[]).filter(l=>l.path?.includes(n)).map(l=>{ const o=l.path.find(x=>x!==n); return [o, l.path.length>2?`${routeTxt(l)} · ${l.label}`:l.label]; }); }
 function host(u){ try{ return new URL(u).hostname.replace(/^www\./,''); }catch{ return ''; } }
+function evFor(n){ return (NEWS._ev?.[n]||[]).filter(e=>evInTopic(e,topic)); }
 function fillCard(n){
   const i=info(n), l=levelOf(n), c=LV[l].c;
   document.getElementById('accent').style.background=`linear-gradient(90deg,${c},transparent)`;
@@ -1745,11 +1760,14 @@ function fillCard(n){
       <div class="meter"><span class="eyebrow">Urgency</span><div class="bar"><i style="width:0;background:linear-gradient(90deg,${c}88,${c})"></i></div><span class="v">${i.score}/100</span></div>
       ${sparkHTML(n,c)}
       ${freshness(i)?`<div class="c-fresh${Date.now()-(i._last||0)>24*3600e3?' old':''}"><span class="fd"></span>${esc(freshness(i))}</div>`:''}
+      ${i._topic?`<div class="c-topic">Showing <b>${esc(TOPICS.find(x=>x[0]===i._topic)?.[1]||i._topic)}</b> news${i._overall.level!==i.level?` · overall <span style="color:${LV[i._overall.level].c}">${LV[i._overall.level].label}</span>`:''}</div>`:''}
+      ${i.ongoing?`<div class="c-topic">Ongoing crisis — serious events on several recent days</div>`:''}
       <div class="c-hl">${esc(i.headline)}</div>
       <p class="c-sum">${esc(i.summary)}</p>
+      ${i._topic && i._overall.summary && i._overall.summary!==i.summary?`<p class="c-also"><b>Also in the news:</b> ${esc(i._overall.summary)}</p>`:''}
       ${ch?`<div class="c-chg ${ch.dir>0?'up':'dn'}">${ch.dir>0?'↑ Escalated':'↓ Eased'} from <b>${LV[ch.from].label}</b> to <b>${LV[ch.to].label}</b> since ${chgSrc==='visit'?'your last visit':'the previous edition'}</div>`:''}
       <div class="readmore">${srcs[0]?`<a class="rm-main" href="${esc(srcs[0].url)}" target="_blank" rel="noopener">Read the full story <small>${esc(host(srcs[0].url))} ↗</small></a>`:''}<a class="rm-alt" href="https://news.google.com/search?q=${encodeURIComponent(shortName(n))}" target="_blank" rel="noopener">More coverage ↗</a></div>
-      ${(NEWS._ev?.[n]||[]).length?`<div class="sec"><h4>Latest reports</h4><ul class="tl evl">${NEWS._ev[n].slice(0,5).map(e=>`<li><span class="dt">${esc(agoShort(e.ts))} ago</span>${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.headline)}</a>`:esc(e.headline)}${e.source?`<small>${esc(e.source)}</small>`:''}</li>`).join('')}</ul></div>`:''}
+      ${evFor(n).length?`<div class="sec"><h4>Latest reports${i._topic?' · '+esc(TOPICS.find(x=>x[0]===i._topic)?.[1]||''):''}</h4><ul class="tl evl">${evFor(n).slice(0,5).map(e=>`<li><span class="dt">${esc(agoShort(e.ts))} ago</span>${e.url?`<a href="${esc(e.url)}" target="_blank" rel="noopener">${esc(e.headline)}</a>`:esc(e.headline)}${e.source?`<small>${esc(e.source)}</small>`:''}</li>`).join('')}</ul></div>`:''}
       ${ups.length && !(NEWS._ev?.[n]||[]).length?`<div class="sec"><h4>Latest developments</h4><ul class="tl">${ups.map(u=>`<li><span class="dt">${esc(u.date)}</span>${esc(u.text)}</li>`).join('')}</ul></div>`:''}
       ${linksFor(n).length?`<div class="sec"><h4>Connected stories</h4><div class="links">${linksFor(n).map(([o,lab])=>`<button class="lnk" data-n="${esc(o)}"><span class="d" style="background:${LV[levelOf(o)].c}"></span><b>${flag(o)} ${esc(shortName(o))}</b><span>${esc(lab)}</span></button>`).join('')}</div></div>`:''}
       ${srcs.length?`<div class="sec"><h4>Sources · ${srcs.length}</h4><div class="srcs">${srcs.map(s=>`<a href="${esc(s.url)}" target="_blank" rel="noopener"><span>${esc(s.title)}</span><small>${esc(host(s.url))} ↗</small></a>`).join('')}</div></div>`:''}
@@ -1826,7 +1844,17 @@ setTimeout(shoot,2500);
 /* ================= BROADCAST MODE ================= */
 let tourName=null, touring=false, tourPaused=false, tourIdx=0, tourList=[], tourTimer=null, tourStepT0=0, tourDur=7000, voiceOn=true, tts=null;
 const bc=document.getElementById('bcast');
-function tourBuild(){ const w=ranked().filter(([n])=>WATCH.has(n)).map(([n])=>n); tourList=[...w, ...ranked().filter(([n,v])=>!WATCH.has(n)&&(v.level==='red'||v.level==='orange')).map(([n])=>n)]; }
+const tourAlso=new Map();
+function tourBuild(){
+  const w=ranked().filter(([n])=>WATCH.has(n)).map(([n])=>n);
+  const all=[...w, ...ranked().filter(([n,v])=>!WATCH.has(n)&&(v.level==='red'||v.level==='orange')).map(([n])=>n)];
+  const byHead=new Map(); tourList=[]; tourAlso.clear();
+  for(const n of all){ const h=String(info(n)?.headline||'').toLowerCase().slice(0,70); const first=h&&byHead.get(h);
+    if(first){ tourAlso.get(first).push(n); continue; }   // same top story: one stop for both countries
+    if(h) byHead.set(h,n); tourList.push(n); tourAlso.set(n,[]); }
+}
+const words=s=>new Set(String(s).toLowerCase().match(/[a-z0-9']{3,}/g)||[]);
+function overlap(a,b){ const A=words(a),B=words(b); if(!A.size||!B.size) return 0; let k=0; A.forEach(x=>B.has(x)&&k++); return k/Math.min(A.size,B.size); }
 function startTour(){
   tourBuild(); if(!tourList.length) return;
   touring=true; tourPaused=false; tourIdx=0; sfx('start');
@@ -1843,7 +1871,8 @@ function tourGo(){
   tourName=n; focusCountry(n); sfx('whoosh');
   setTimeout(()=>{ if(tourName===n){ addShock(n); sfx('ping'); } },1100);
   document.getElementById('bcFlag').textContent=flag(n);
-  document.getElementById('bcName').textContent=shortName(n);
+  const also=tourAlso.get(n)||[], names=[n,...also].map(shortName), spoken=names.length>1?names.slice(0,-1).join(', ')+' and '+names.at(-1):names[0];
+  document.getElementById('bcName').textContent=names.join(' & ');
   document.getElementById('bcBadge').innerHTML=`<span class="badge" style="background:${c}22;color:${c};border:1px solid ${c}55">${LV[l].label}</span>`;
   document.getElementById('bcHead').textContent=i.headline;
   document.getElementById('bcCount').textContent=`${tourIdx+1} / ${tourList.length}`;
@@ -1851,8 +1880,9 @@ function tourGo(){
   tourStepT0=performance.now();
   const next=()=>{ if(!touring||tourName!==n||tourPaused) return; tourIdx=(tourIdx+1)%tourList.length; tourGo(); };
   if(voiceOn){
-    const firstSentence=(i.summary.match(/^.*?[.!?](\s|$)/)||[i.summary])[0];
-    const line=`${shortName(n)}. ${i.headline}. ${firstSentence}`;
+    const sents=String(i.summary||'').match(/[^.!?]+[.!?]+/g)||[String(i.summary||'')];
+    const extra=sents.map(s=>s.trim()).find(s=>s && overlap(s,i.headline)<.5)||'';   // skip sentences that just repeat the headline
+    const line=`${spoken}. ${i.headline.replace(/[.\s]*$/,'')}. ${extra}`;
     const go=()=>{ if(tourName!==n||!touring) return; speak(line).then(()=>{ tourTimer=setTimeout(next,900); },()=>{ if(tourName===n){ tourTimer=setTimeout(next,4000); runBar(4000); } }); };
     wasSpeaking ? setTimeout(go,180) : go();   // speak in the same tap on first play (iOS needs that); pause briefly after a cancel
     runBar(9000);
@@ -1876,7 +1906,7 @@ document.getElementById('bcMore').onclick=()=>{ const n=tourName; tourPaused=tru
 /* voice: Claude voices where offered; otherwise the device's own voices, best-sounding first */
 const CLAUDE_VOICES=[['buttery','Warm'],['airy','Light'],['glassy','Crisp'],['rounded','Deep']];
 let sysVoices=[], voicePref=null;
-try{ voicePref=localStorage.getItem('wp_voice'); }catch{}
+try{ voicePref=localStorage.getItem('wp_voice2'); }catch{}   // new key: everyone starts on Daniel
 const BAD_VOICE=/compact|eloquence|albert|bad news|bells|boing|bubbles|cellos|good news|jester|organ|superstar|trinoids|whisper|wobble|zarvox|fred|junior|kathy|ralph|grandma|grandpa|rocko|sandy|shelley|flo\b|eddy|reed|hysterical|deranged|pipe/i;
 function voiceScore(v){
   const n=v.name; let s=0;
@@ -1887,9 +1917,12 @@ function voiceScore(v){
   if(BAD_VOICE.test(n)) s-=100;
   return s;
 }
+const VOICE_PICK=['Daniel','Samantha','Karen'];   // default first
 function loadVoices(){
   if(!('speechSynthesis' in window)) return;
-  sysVoices=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)&&!BAD_VOICE.test(v.name)).sort((a,b)=>voiceScore(b)-voiceScore(a));
+  const all=speechSynthesis.getVoices().filter(v=>/^en/i.test(v.lang)&&!BAD_VOICE.test(v.name)).sort((a,b)=>voiceScore(b)-voiceScore(a));
+  const picked=VOICE_PICK.map(nm=>all.find(v=>new RegExp('^'+nm+'\\b','i').test(v.name))).filter(Boolean);   // best-quality version of each
+  sysVoices=(picked.length?[...picked, ...all.filter(v=>!picked.includes(v))]:all).filter((v,i,a)=>a.findIndex(x=>x.name.split(' (')[0]===v.name.split(' (')[0])===i).slice(0,3);
   renderVoiceMenu();
 }
 if('speechSynthesis' in window){ loadVoices(); speechSynthesis.addEventListener?.('voiceschanged',loadVoices); }
@@ -1934,7 +1967,7 @@ function renderVoiceMenu(){
       + (!cl.length?`<div class="vm-note">Claude's own voices aren't available in this browser — they work in the Claude desktop app and on a computer.</div>`:'')
     : '<div class="vm-empty">No voices are available in this browser.</div>';
   box.querySelectorAll('.vm-item').forEach(b=>b.onclick=()=>{
-    voicePref=b.dataset.id; try{ localStorage.setItem('wp_voice',voicePref); }catch{}
+    voicePref=b.dataset.id; try{ localStorage.setItem('wp_voice2',voicePref); }catch{}
     renderVoiceMenu(); const was=stopVoice();
     const say=()=>speak('This is World Pulse. Here are the top stories.').catch(()=>{});
     was?setTimeout(say,150):say();
@@ -2208,14 +2241,16 @@ const TAGMAP={
   health:['health','humanitarian']
 };
 function topicsOf(n){ const i=NEWS.countries[n]; if(!i) return []; const t=(i.tags||[]).map(s=>String(s).toLowerCase()); return Object.keys(TAGMAP).filter(k=>TAGMAP[k].some(x=>t.includes(x))); }
-function topicMatch(n){ return topic==='all' || topicsOf(n).includes(topic); }
+function topicMatch(n){ if(topic==='all') return true; const b=NEWS.countries[n]; return b?.byTopic ? !!b.byTopic[topic] : topicsOf(n).includes(topic); }
+function evInTopic(e,k){ if(k==='all') return true; const tg=(e.tags||[]).map(s=>String(s).toLowerCase()); return !e.tags || TAGMAP[k].some(x=>tg.includes(x)); }
+function topicLevel(n,k){ const b=NEWS.countries[n]; if(!b) return null; if(b.byTopic) return b.byTopic[k]?.level||null; return topicsOf(n).includes(k)?b.level:null; }
 function setTopic(t){
-  topic=t; haptic();
+  topic=t; haptic(); if(selected && cardKind==='country') setTimeout(()=>fillCard(selected),0);
   document.querySelectorAll('#topicChips .tchip').forEach(b=>b.classList.toggle('on',b.dataset.t===t));
   refreshMap(); buildUI(); vizRefresh();
 }
 function renderTopics(){
-  const cnt={}; Object.keys(NEWS.countries).forEach(n=>{ if(byName.has(n)) topicsOf(n).forEach(k=>cnt[k]=(cnt[k]||0)+1); });
+  const cnt={}; Object.keys(NEWS.countries).forEach(n=>{ if(!byName.has(n)) return; TOPICS.forEach(([k])=>{ if(k==='all') return; const l=topicLevel(n,k); if(l && !hidden.has(l) && (!solo || solo===l)) cnt[k]=(cnt[k]||0)+1; }); });   // counts follow the chosen urgency
   const el=document.getElementById('topicChips');
   el.innerHTML=TOPICS.map(([k,l])=>`<button class="tchip topic${k===topic?' on':''}" data-t="${k}">${l}${k!=='all'?`<i>${cnt[k]||0}</i>`:''}</button>`).join('');
   el.querySelectorAll('.tchip').forEach(b=>b.onclick=()=>setTopic(b.dataset.t!=='all' && topic===b.dataset.t?'all':b.dataset.t));   // tap the active topic again to reset
@@ -2474,7 +2509,6 @@ function layoutHUD(){
   for(const id of ['rankView','webView']){ const s=$(id).style; s.left=left+'px'; s.right=edge+'px'; s.top=below+'px'; s.bottom=vb+'px'; }
 }
 function wireFeatures(){
-  renderTopics();
   document.getElementById('regBtn').onclick=()=>openRegion(nearestRegion());
   document.getElementById('histBtn').onclick=openTimeline;
   document.getElementById('appBtn').onclick=openAppSheet;
