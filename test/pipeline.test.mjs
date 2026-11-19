@@ -13,6 +13,9 @@ const A = [
   ['Senegal ruling party expels President Faye', 20],
   ['Floods in New South Wales cut off towns', 7],
   ['Old story', 100],
+  ['FIFA rankings: France finish the year on the podium', 2],
+  ['Sydney Marathon winner banned for three years', 3],
+  ['Why is Pete Hegseth strengthening US military ties with Venezuela?', 4],
 ];
 const B = [['Sudan army advances in Kordofan as RSF retreats', 2], ['Germany and Ukraine to co-produce ground drones', 9]];
 const fake = async url => {
